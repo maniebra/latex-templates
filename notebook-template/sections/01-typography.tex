@@ -1,0 +1,80 @@
+\chapter{Typography}
+\label{cha:typography}
+\epigraph{Typography is the craft of endowing human language with a durable
+visual form.}{Robert Bringhurst}
+
+The body is Inter at 10\,pt on a 1.20 leading, which puts about 70 characters on a line. Headings are Lexend, which descends in weight rather than only in size — a section is set at 600, a
+subsection at 500, and a sub-subsection drops to Inter entirely. That
+progression is what makes a page feel like a book instead of a slide deck.
+
+\section{Weights and emphasis}
+
+Both families are variable fonts, so the weights here are real instances
+pulled off the \texttt{wght} axis, not synthesised. \textbf{Bold} sits at 650,
+which holds up better in print than a true 700. \emph{Italic} comes from
+Inter's own italic cut.
+
+The display cuts are available directly when you need them:
+{\displaylight Lexend Light}, {\displaybook Book}, {\displaymed Medium},
+{\displaysemi SemiBold}, {\displaybold Bold}.
+
+\subsection{Inline furniture}
+
+Press \kbd{Ctrl}+\kbd{Shift}+\kbd{P} to open the palette, then run
+\cmd{git rebase --interactive}. This release is \pill[green]{stable}; the
+old API is \pill[red]{deprecated} and the streaming path is
+\outlinepill[teal]{beta}. Things worth \hl{marking as you read} stay marked.
+
+Tags work the way they do in Obsidian: \tagpill{\#linear-algebra}
+\tagpill[purple]{\#unfinished} \tagpill[teal]{\#reference}.
+
+\subsubsection{A quieter heading}
+
+Sub-subsections are set in Inter SemiBold at reading size, in the muted ink.
+They are meant to organise a long passage without interrupting it.
+
+\paragraph{Run-in headings} are useful for definition-dense notes, where a
+full heading would cost more vertical space than the idea is worth.
+
+\section{The margin}
+
+The outer margin is 34\,mm, which is wide on purpose.\sidenote{Margin notes live
+here. Keep them to a sentence or two — anything longer belongs in the body or
+a callout.} It holds margin notes and gives the text block somewhere to
+breathe.
+
+\divider
+
+Footnotes are small and quiet, with a short rule above them.\footnote{Like
+this one. Set at 7.4\,pt, hanging, pinned to the bottom of the page.}
+
+\begin{quotation}
+A pull-quote is unboxed and italic. It borrows emphasis from the surrounding
+whitespace rather than from a frame.
+\end{quotation}
+
+\section{Mathematics}
+
+Maths is set in Latin Modern Math, which pairs acceptably with Inter and can
+be swapped in \texttt{styles/fonts.sty} for STIX Two Math or Libertinus Math.
+
+\begin{definition}[Convergence]
+A sequence $(x_n)$ in a metric space $(X, d)$ converges to $x \in X$ if for
+every $\varepsilon > 0$ there is an $N$ such that $d(x_n, x) < \varepsilon$
+for all $n > N$.
+\end{definition}
+
+\begin{theorem}[Uniqueness of limits]
+A sequence in a Hausdorff space has at most one limit.
+\end{theorem}
+
+\begin{proof}
+Suppose $x_n \to x$ and $x_n \to y$ with $x \neq y$. Pick disjoint
+neighbourhoods $U \ni x$ and $V \ni y$. The tail of the sequence lies in both,
+which is impossible since $U \cap V = \emptyset$.
+\end{proof}
+
+Display maths gets the space it needs:
+\[
+  \int_{-\infty}^{\infty} e^{-x^2}\,\mathrm{d}x = \sqrt{\pi}.
+\]

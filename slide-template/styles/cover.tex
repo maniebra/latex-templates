@@ -1,0 +1,40 @@
+\newcommand{\makecover}{{
+\setbeamertemplate{background canvas}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[white] (current page.south west) rectangle (current page.north east);
+        \draw[step=1cm, gray!20, thin] (current page.south west) grid (current page.north east);
+
+        \fill[accent, opacity=0.15] ([xshift=2cm, yshift=-2cm]current page.north west) circle (2.5cm);
+        \fill[accentAlt, opacity=0.15] ([xshift=-3cm, yshift=2.5cm]current page.south east) circle (3cm);
+        \fill[alert, opacity=0.15, rounded corners=1.5cm] ([xshift=4cm, yshift=1cm]current page.south west) rectangle ++(4.5, 4.5);
+    \end{tikzpicture}
+}
+\begin{frame}[plain]
+    \vfill
+    \begin{center}
+        \begin{tcolorbox}[
+                enhanced, width=0.85\textwidth, halign=center,
+                colback=white, opacityback=0.85,
+                opacityframe=0.5, colframe=white,
+                arc=5mm, boxrule=1pt, drop shadow={opacity=0.1},
+            ]
+            \centering
+            \vspace{0.5cm}
+            {\usebeamerfont{title} \color{ink} \inserttitle\par}
+            \vspace{0.5cm}
+            {\usebeamerfont{subtitle} \color{gray} \insertsubtitle\par}
+
+            \vspace{0.7cm}
+
+            {\usebeamerfont{author} \color{ink} \insertauthor\par}
+            \vspace{0.3cm}
+            {\usebeamerfont{institute} \color{ink!80} \insertinstitute\par}
+            \vspace{0.2cm}
+            {\usebeamerfont{date} \color{ink!80} \insertdate\par}
+            \vspace{0.5cm}
+
+        \end{tcolorbox}
+    \end{center}
+    \vfill
+\end{frame}
+}}

@@ -1,0 +1,43 @@
+\ProvidesPackage{styles/notebook}[2026/08/02 Notebook template]
+% Single entry point; main.tex loads only this.
+% Order matters: vars, then fonts, then the rest.
+
+\RequirePackage{xcolor}
+\input{vars/colors.tex}
+\input{vars/meta.tex}
+
+\RequirePackage{styles/fonts}
+\RequirePackage{styles/page}
+\RequirePackage{styles/headings}
+\RequirePackage{styles/callouts}
+\RequirePackage{styles/code}
+\RequirePackage{styles/pills}
+\RequirePackage{styles/tables}
+\RequirePackage{styles/cover}
+
+\hypersetup{
+  pdftitle  = {\nbTitle},
+  pdfauthor = {\nbAuthor},
+  pdfsubject= {\nbSubtitle},
+}
+
+\RequirePackage{csquotes}
+\RequirePackage{amsmath}
+
+% Pull-quote
+\renewenvironment{quotation}
+  {\begin{list}{}{\leftmargin 1.4em \rightmargin 1em}\item[]%
+   \itshape\color{inkmuted}}
+  {\end{list}}
+
+% Footnotes
+\renewcommand{\footnoterule}{\vspace*{6pt}{\color{rule}\hrule width 60pt height 0.4pt}\vspace*{5pt}}
+\RequirePackage[bottom, hang, flushmargin]{footmisc}
+\renewcommand{\footnotesize}{\fontsize{7.4}{10.2}\selectfont}
+
+% Cross-references
+\RequirePackage{cleveref}
+\crefname{chapter}{chapter}{chapters}
+\crefname{section}{section}{sections}
+\crefname{table}{table}{tables}
+\crefname{figure}{figure}{figures}

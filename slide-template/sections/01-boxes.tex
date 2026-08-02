@@ -1,0 +1,44 @@
+\begin{frame}{Panels}
+    \begin{panel}{A titled panel}
+        \begin{itemize}
+            \item \texttt{panel} takes a title as its mandatory argument.
+            \item It breaks across frames, so a long list will not overflow.
+            \item Any \texttt{tcolorbox} key goes in the optional argument.
+        \end{itemize}
+    \end{panel}
+\end{frame}
+
+\begin{frame}{Two panels on one slide}
+    \begin{panel}[height=2.6cm]{Fixed height}
+        Pass \texttt{height} to line up panels that sit next to each other.
+    \end{panel}
+
+    \vspace{0.3cm}
+
+    \begin{panel}[height=2.6cm]{Second panel}
+        Colours all come from \texttt{vars/colors.tex}; change one there and
+        every panel follows.
+    \end{panel}
+\end{frame}
+
+\begin{frame}{Split panel}
+    \begin{panelsplit}
+        \centering
+        \tikz[baseline]\node[draw=gray!40, fill=surface, rounded corners=2pt,
+            minimum width=3.2cm, minimum height=2.4cm, text=gray]{your figure here};
+        \tcblower
+        \begin{itemize}
+            \item \texttt{panelsplit} splits left and right at \texttt{\textbackslash tcblower}.
+            \item The left column takes a third of the width by default.
+            \item Override it with \texttt{[lefthand ratio=0.5]}.
+        \end{itemize}
+    \end{panelsplit}
+\end{frame}
+
+\begin{frame}{A figure on its own}
+    \begin{panel}{Figure}
+        \centering
+        \tikz[baseline]\node[draw=gray!40, fill=surface, rounded corners=2pt,
+            minimum width=6cm, minimum height=3cm, text=gray]{your figure here};
+    \end{panel}
+\end{frame}

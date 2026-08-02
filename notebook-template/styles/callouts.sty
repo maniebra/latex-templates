@@ -1,0 +1,164 @@
+\ProvidesPackage{styles/callouts}[2026/08/02 Obsidian-style callouts]
+% Admonitions: tinted body, accent left bar, icon + title. Breakable.
+%
+%   \begin{note}[Optional title] ... \end{note}
+%   \newcallout{name}{colour}{icon}{Default Title}
+
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{fontawesome5}
+\RequirePackage{etoolbox}
+
+% In every title block below, \par sits OUTSIDE the braces that set the
+% title's colour and weight. Inside, both leak into the box body.
+
+\tcbuselibrary{skins, breakable}
+
+% #1 colour, #2 icon, #3 title (empty = no header line)
+\tcbset{
+  callout/.style n args={3}{
+    enhanced, breakable,
+    colback     = #1!5!paper,
+    colframe    = #1,
+    boxrule     = 0pt,
+    leftrule    = 2.4pt,
+    arc         = 3.2pt,
+    outer arc   = 3.2pt,
+    left        = 12pt, right = 12pt, top = 9pt, bottom = 9pt,
+    boxsep      = 0pt,
+    before skip = 0.9\baselineskip,
+    after  skip = 0.9\baselineskip,
+    fontupper   = \fontsize{8.9}{12.6}\selectfont\color{ink}%
+                  \setlength{\parskip}{0.5\baselineskip},
+    parbox      = false,
+    before upper={%
+      \ifblank{#3}{}{%
+        {\uisemi\fontsize{9.3}{9.3}\selectfont\color{#1}%
+         #2~#3}\par\vspace{1pt}}%
+    },
+  },
+}
+
+\newcommand{\newcallout}[4]{%
+  % #1 env name  #2 colour  #3 icon  #4 default title
+  \newtcolorbox{#1}[1][#4]{callout={#2}{#3}{##1}}%
+}
+
+\newcallout{note}     {blue}  {\faIcon{pencil-alt}}          {Note}
+\newcallout{abstract} {cyan}  {\faIcon{clipboard-list}}      {Summary}
+\newcallout{info}     {blue}  {\faIcon{info-circle}}         {Info}
+\newcallout{tip}      {teal}  {\faIcon{fire-alt}}            {Tip}
+\newcallout{success}  {green} {\faIcon{check-circle}}        {Success}
+\newcallout{question} {yellow}{\faIcon{question-circle}}     {Question}
+\newcallout{warning}  {orange}{\faIcon{exclamation-triangle}}{Warning}
+\newcallout{failure}  {red}   {\faIcon{times-circle}}        {Failure}
+\newcallout{caution}  {red}   {\faIcon{bolt}}                {Danger}
+%  ^ not `danger`: unicode-math owns \danger (U+2621).
+\newcallout{bug}      {pink}  {\faIcon{bug}}                 {Bug}
+\newcallout{example}  {purple}{\faIcon{list-ol}}             {Example}
+\newcallout{quotebox} {gray}  {\faIcon{quote-left}}          {Quote}
+\newcallout{idea}     {grape} {\faIcon{lightbulb}}           {Idea}
+\newcallout{todo}     {orange}{\faIcon{tasks}}               {To do}
+
+% Bar and tint only, no header line.
+\newtcolorbox{aside}[1][gray]{callout={#1}{}{}}
+
+% Theorem boxes, numbered per chapter.
+\newcounter{nbthm}[chapter]
+\renewcommand{\thenbthm}{\thechapter.\arabic{nbthm}}
+
+\newcommand{\newmathbox}[3]{% #1 env  #2 colour  #3 label word
+  \newtcolorbox[use counter=nbthm]{#1}[1][]{%
+    enhanced, breakable,
+    colback = #2!4!paper, colframe = #2!35!paper,
+    boxrule = 0.6pt, arc = 3.2pt,
+    left = 12pt, right = 12pt, top = 9pt, bottom = 9pt, boxsep = 0pt,
+    fontupper = \fontsize{8.9}{12.6}\selectfont\color{ink}%
+                \setlength{\parskip}{0.5\baselineskip},
+    parbox = false,
+    before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+    before upper={%
+      {\uisemi\fontsize{9.3}{9.3}\selectfont\color{#2}#3~\thenbthm
+       \ifblank{##1}{}{%
+         \;\textcolor{inkfaint}{\textbar}\;%
+         {\normalfont\itshape\color{inkmuted}##1}}}%
+      \par\vspace{1pt}},
+  }%
+}
+
+\newmathbox{theorem}   {accent}{Theorem}
+\newmathbox{definition}{teal}  {Definition}
+\newmathbox{lemma}     {purple}{Lemma}
+\newmathbox{proposition}{blue} {Proposition}
+
+% Proof: marker plus an end-of-proof square.
+\newenvironment{proof}[1][Proof]
+  {\par\vspace{0.4\baselineskip}\noindent
+   {\uisemi\color{inkmuted}#1.}\hspace{0.5em}\ignorespaces}
+  {\hfill{\color{inkfaint}\rule[0.05ex]{1.1ex}{1.1ex}}\par\vspace{0.4\baselineskip}}
+
+% Exercises
+
+\newcounter{nbex}[chapter]
+\renewcommand{\thenbex}{\thechapter.\arabic{nbex}}
+
+% Question above \tcblower, solution below it.
+%
+%   \begin{exercise}[Optional title] ... \tcblower ... \end{exercise}
+\newtcolorbox[use counter=nbex]{exercise}[1][]{%
+  enhanced, breakable,
+  colback  = grape!5!paper,
+  colframe = grape,
+  boxrule  = 0pt, leftrule = 2.4pt,
+  arc = 3.2pt, outer arc = 3.2pt,
+  left = 12pt, right = 12pt, top = 9pt, bottom = 9pt, boxsep = 0pt,
+  before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+  parbox = false,
+  fontupper = \fontsize{8.9}{12.6}\selectfont\color{ink}%
+              \setlength{\parskip}{0.5\baselineskip},
+  fontlower = \fontsize{8.9}{12.6}\selectfont\color{ink}%
+              \setlength{\parskip}{0.5\baselineskip},
+  colbacklower = grape!2!paper,
+  segmentation style = {solid, grape!30!paper, line width = 0.5pt},
+  before upper={%
+    {\uisemi\fontsize{9.3}{9.3}\selectfont\color{grape}%
+     \faIcon{pen-fancy}~Exercise~\thenbex
+     \ifblank{#1}{}{%
+       \;\textcolor{inkfaint}{\textbar}\;%
+       {\normalfont\itshape\color{inkmuted}#1}}}%
+    \par\vspace{1pt}},
+  before lower={%
+    {\uisemi\fontsize{7.4}{7.4}\selectfont\color{grape!80!ink}%
+     \tracked[100]{SOLUTION}}\par\vspace{3pt}},
+}
+
+% Blank box for the reader, on the cover's dot grid. Any tcolorbox key
+% passes through:
+%
+%   \workspace   \workspace[height=70mm]   \workspace[wslabel=Working]
+\tcbset{wslabel/.store in = \nb@wslabel, wslabel = Solution}
+
+\newtcolorbox{nb@workspace}[1][]{%
+  enhanced, nobeforeafter = false,
+  colback = paper, colframe = rule,
+  boxrule = 0.6pt, arc = 3.2pt,
+  left = 12pt, right = 12pt, top = 9pt, bottom = 9pt, boxsep = 0pt,
+  height = 42mm,
+  before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+  underlay={%
+    \begin{tcbclipinterior}
+      \foreach \i in {0,...,40}{%
+        \foreach \j in {0,...,24}{%
+          \fill[rule]
+            ([shift={(\i*5mm+2.5mm, \j*5mm+2.5mm)}]interior.south west)
+            circle (0.32pt);}}%
+    \end{tcbclipinterior}},
+  overlay={%
+    \node[anchor = north west, text = inkfaint,
+          font = \uimed\fontsize{7}{7}\selectfont]
+      at ([shift={(11pt,-8pt)}]frame.north west)
+      {\tracked[100]{\MakeUppercase{\nb@wslabel}}};},
+  #1,
+}
+
+\newcommand{\workspace}[1][]{%
+  \begin{nb@workspace}[#1]\end{nb@workspace}}

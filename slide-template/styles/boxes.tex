@@ -1,0 +1,30 @@
+\newtcolorbox{panel}[2][]{
+        enhanced, breakable,
+        colback=white, colframe=gray!30, width=\textwidth,
+        boxrule=0.5pt, arc=3mm,
+        colbacktitle=white, coltitle=black!80, fonttitle=\titlefont\bfseries,
+        title={\rule[-4pt]{0pt}{14pt}#2}, halign title=center,
+        toptitle=2pt, bottomtitle=2pt, titlerule=0pt,
+        drop shadow={opacity=0.1},
+        overlay={
+                        \foreach \x/\c in {12pt/dotRed, 24pt/dotYellow, 36pt/dotGreen} {
+                                        \fill[\c] ([xshift=\x, yshift=-13pt]frame.north west) circle (3.5pt);
+                                }
+                }, #1
+}
+
+\newtcolorbox{panelsplit}[1][]{
+        enhanced, breakable,
+        colback=white, colframe=gray!30, width=\textwidth,
+        boxrule=0.5pt, arc=3mm, sidebyside, lefthand ratio=0.33,
+        colbacktitle=white, titlerule=0pt,
+        % The exact same invisible \rule so the height matches perfectly
+        title={\rule[-4pt]{0pt}{14pt}},
+        toptitle=2pt, bottomtitle=2pt,
+        drop shadow={opacity=0.1},
+        overlay={
+                        \foreach \x/\c in {12pt/dotRed, 24pt/dotYellow, 36pt/dotGreen} {
+                                        \fill[\c] ([xshift=\x, yshift=-13pt]frame.north west) circle (3.5pt);
+                                }
+                }, #1
+}

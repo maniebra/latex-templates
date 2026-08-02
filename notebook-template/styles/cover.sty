@@ -1,0 +1,119 @@
+\ProvidesPackage{styles/cover}[2026/08/02 Title page and colophon]
+% \makecover, \makecolophon, \epigraph, \divider
+
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+
+% Drawn in the shipout background layer in paper mm, so it needs one pass.
+% Trim 170x240mm; the 20mm left edge matches the text block.
+%
+% No alpha here: xdvipdfmx drops pgf's transparency ExtGState resources, so
+% under XeLaTeX every translucent element renders solid. Fills are pre-mixed
+% against the accent ground instead (white!10!\nbAccent).
+\newcommand{\cover@left}{20}     % lines up with the text block
+\newcommand{\cover@right}{150}
+
+\newcommand{\makecover}{%
+  \begin{titlepage}
+  \thispagestyle{bare}
+  \AddToShipoutPictureBG*{\AtPageLowerLeft{%
+    \begin{tikzpicture}[x=1mm, y=1mm, inner sep=0pt, outer sep=0pt]
+
+      \fill[\nbAccent] (0,0) rectangle (170,240);
+
+      \begin{scope}
+        \clip (0,0) rectangle (170,240);
+
+        % Rings centred on the top-right corner; most of each falls
+        % outside the trim, so what lands on the page reads as arcs.
+        \foreach \r in {46,70,94,118,142}
+          {\draw[white!15!\nbAccent, line width=0.6] (170,240) circle (\r);}
+        \fill[white!5!\nbAccent] (170,240) circle (46);
+
+        % Smaller pair off the bottom-left corner.
+        \foreach \r in {30,46}
+          {\draw[white!12!\nbAccent, line width=0.6] (0,0) circle (\r);}
+
+        \foreach \x in {5,10,...,168}
+          \foreach \y in {5,10,...,238}
+            {\fill[white!10!\nbAccent] (\x,\y) circle (0.34);}
+      \end{scope}
+
+      \node[anchor=north west, text=white!75!\nbAccent,
+            font=\uisemi\fontsize{8}{8}\selectfont]
+        at (\cover@left,224) {\tracked[150]{\MakeUppercase{\nbKicker}}};
+
+      \fill[white!35!\nbAccent] (\cover@left,218) rectangle (\cover@right,218.4);
+
+      % Spine rule and rotated imprint down the outer edge.
+      \fill[white!30!\nbAccent] (160,26) rectangle (160.4,196);
+      \node[rotate=90, anchor=center, text=white!55!\nbAccent,
+            font=\uimed\fontsize{7}{7}\selectfont]
+        at (164,111) {\tracked[120]{\MakeUppercase{\nbShortTitle}}};
+
+      \node[anchor=south west, text=white, text width=126mm,
+            align=flush left,
+            font=\displaylight\fontsize{42}{46}\selectfont]
+        at (\cover@left,150) {\nbTitle};
+
+      \fill[white] (\cover@left,141) rectangle (\cover@left+34,142.8);
+
+      % Imprint card: white panel with a soft shadow.
+      \fill[black!9!\nbAccent, rounded corners=3mm]
+        (\cover@left+1.2,24.2) rectangle (\cover@right+1.2,88.8);
+      \fill[paper, rounded corners=3mm]
+        (\cover@left,26) rectangle (\cover@right,90);
+
+      \fill[\nbAccent] (30,78) rectangle (48,79.6);
+
+      \node[anchor=north west, text=ink, text width=104mm,
+            align=flush left,
+            font=\displaylight\fontsize{13}{18}\selectfont]
+        at (30,72) {\nbSubtitle};
+
+      \fill[rule] (30,50) rectangle (140,50.4);
+
+      \node[anchor=base west, text=ink,
+            font=\uisemi\fontsize{10}{10}\selectfont]
+        at (30,38) {\nbAuthor};
+
+      % Date shares the author's baseline; stacking them holes the card.
+      \node[anchor=base east, text=inkfaint,
+            font=\uimed\fontsize{8}{8}\selectfont]
+        at (140,38) {\tracked[80]{\MakeUppercase{\nbDate}}};
+
+    \end{tikzpicture}}}
+  \null
+  \end{titlepage}
+  \cleardoublepage
+}
+
+\newcommand{\makecolophon}[1]{%
+  \thispagestyle{bare}
+  \null\vfill
+  {\fontsize{7.9}{12.1}\selectfont\color{inkmuted}\raggedright #1\par}
+  \vspace{10mm}
+  {\uimed\fontsize{7}{10.2}\selectfont\color{inkfaint}%
+   Set in Inter and Lexend. Typeset with Lua\LaTeX.\par}
+  \clearpage
+}
+
+% Epigraph, placed directly after \chapter{}.
+\newcommand{\epigraph}[2]{%
+  \begingroup
+  \vspace{-0.4\baselineskip}
+  \begin{flushright}
+  \begin{minipage}{0.72\linewidth}\raggedleft
+    {\itshape\fontsize{8.9}{13}\selectfont\color{inkmuted}#1\par}
+    \vspace{5pt}
+    {\uimed\fontsize{7.4}{7.4}\selectfont\color{inkfaint}\tracked[60]{\MakeUppercase{#2}}\par}
+  \end{minipage}
+  \end{flushright}
+  \vspace{0.6\baselineskip}
+  \endgroup}
+
+% Section divider.
+\newcommand{\divider}{%
+  \par\vspace{0.9\baselineskip}
+  \centerline{\textcolor{inkfaint}{$\ast$\quad$\ast$\quad$\ast$}}
+  \vspace{0.9\baselineskip}\par}

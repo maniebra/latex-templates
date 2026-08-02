@@ -1,0 +1,87 @@
+\chapter{Code}
+
+Code blocks are Pygments-highlighted through minted, wrapped in a box with a
+small chrome bar carrying the language and, optionally, a filename. Compile
+with \texttt{-shell-escape} or none of this works.
+
+\section{A block with a filename}
+
+\begin{code}{python}{fib.py}
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib(n: int) -> int:
+    """Nothing clever. The cache does the work."""
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+print([fib(n) for n in range(10)])
+\end{code}
+
+Pass an empty second argument when the snippet has no file to belong to:
+
+\begin{code}{rust}{}
+fn main() {
+    let total: u32 = (1..=100).filter(|n| n % 3 == 0 || n % 5 == 0).sum();
+    println!("{total}");
+}
+\end{code}
+
+\section{Other languages}
+
+\begin{code}{haskell}{Primes.hs}
+primes :: [Int]
+primes = sieve [2..]
+  where sieve (p:xs) = p : sieve [x | x <- xs, x `mod` p /= 0]
+\end{code}
+
+\begin{code}{sql}{report.sql}
+select
+  date_trunc('month', created_at) as month,
+  count(*) filter (where status = 'shipped') as shipped
+from orders
+where created_at >= now() - interval '1 year'
+group by 1
+order by 1;
+\end{code}
+
+\section{Terminal sessions}
+
+Shell transcripts get a dark surface, because that is what a terminal looks
+like and pretending otherwise helps nobody.
+
+\begin{terminal}
+$ latexmk -lualatex -shell-escape main.tex
+Latexmk: Run number 1 of rule 'lualatex'
+Output written on main.pdf (24 pages, 412918 bytes).
+Latexmk: All targets (main.pdf) are up-to-date
+\end{terminal}
+
+\section{Unhighlighted text}
+
+For output, logs, or anything Pygments would only get wrong:
+
+\begin{plaincode}
+notebook-template/
+├── styles/     package files, one concern each
+├── fonts/      Inter, Lexend, SF Mono
+├── vars/       colours and metadata — edit these
+├── sections/   your actual writing
+└── main.tex
+\end{plaincode}
+
+\section{Inline}
+
+Run \cmd{latexmk -c} to clear the auxiliary files, or \cmd{latexmk -C} to also
+remove the PDF. The \texttt{minted} cache lives in \cmd{\_minted-main/} and is
+already in \texttt{.gitignore}.
+
+\begin{tip}[Including real files]
+\texttt{\textbackslash inputcode\{python\}\{src/model.py\}} pulls a file
+straight off disk, so the book never drifts from the code it documents.
+\end{tip}
+
+\begin{note}[Changing the theme]
+The highlighting style is set once in \texttt{styles/code.sty}
+(\texttt{style = friendly}). Run \cmd{pygmentize -L styles} to see the rest —
+\texttt{tango}, \texttt{xcode}, and \texttt{perldoc} all print well.
+\end{note}

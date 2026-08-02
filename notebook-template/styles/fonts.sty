@@ -1,0 +1,77 @@
+\ProvidesPackage{styles/fonts}[2026/08/02 Typography]
+% Inter (body), Lexend (display), SF Mono (code). LuaLaTeX or XeLaTeX.
+%
+% Weights are static instances cut from the variable originals in fonts/.
+% XeTeX ignores RawFeature={axis={...}} and falls back to Regular, so the
+% wght axis cannot be selected at run time. To add a weight:
+%   fonttools varLib.instancer -q fonts/Inter.ttf wght=550 -o fonts/Inter-550.ttf
+
+\RequirePackage{iftex}
+\RequirePackage{fontspec}
+\RequirePackage[math-style=TeX]{unicode-math}
+
+% Before \defaultfontfeatures, while kpathsea still resolves the name.
+\setmathfont{latinmodern-math.otf}
+
+\defaultfontfeatures{Path=fonts/, Ligatures=TeX}
+
+\setmainfont{Inter-400.ttf}[
+  ItalicFont     = Inter-Italic-400.ttf,
+  BoldFont       = Inter-650.ttf,          % 650, not 700: prints better
+  BoldItalicFont = Inter-Italic-650.ttf,
+  Numbers        = Proportional,
+]
+
+\setsansfont{Inter-400.ttf}[
+  ItalicFont     = Inter-Italic-400.ttf,
+  BoldFont       = Inter-650.ttf,
+  BoldItalicFont = Inter-Italic-650.ttf,
+]
+
+\newfontfamily\displayfont {Lexend-500.ttf}[BoldFont = Lexend-700.ttf]
+\newfontfamily\displaylight{Lexend-300.ttf}
+\newfontfamily\displaybook {Lexend-400.ttf}
+\newfontfamily\displaymed  {Lexend-500.ttf}
+\newfontfamily\displaysemi {Lexend-600.ttf}
+\newfontfamily\displaybold {Lexend-700.ttf}
+\newfontfamily\displayblack{Lexend-800.ttf}
+
+% UI chrome: pills, headers, captions
+\newfontfamily\uimed {Inter-500.ttf}
+\newfontfamily\uisemi{Inter-600.ttf}
+\newfontfamily\uibold{Inter-700.ttf}
+
+% Tabular figures, for table columns
+\newfontfamily\tabularfigures{Inter-400.ttf}[Numbers = Monospaced]
+
+\setmonofont{SF-Mono-Regular.otf}[
+  BoldFont       = SF-Mono-Semibold.otf,
+  ItalicFont     = SF-Mono-RegularItalic.otf,
+  BoldItalicFont = SF-Mono-BoldItalic.otf,
+  Scale          = 0.90,
+]
+
+% XeTeX has protrusion but no font expansion; requesting it is an error.
+% spacing and kerning are pdfTeX-only and error on both engines.
+\ifXeTeX
+  \RequirePackage[protrusion=true, final, tracking=true, factor=1100]{microtype}
+\else
+  \RequirePackage[activate={true,nocompatibility},
+                  final, tracking=true, factor=1100]{microtype}
+\fi
+\SetTracking{encoding=*, shape=sc}{40}
+
+% Letter-spaced labels. LetterSpace=N widens each letter gap by N/100 em, so
+% the word space must scale with N or words run together. LuaTeX adds the
+% tracking to the space, XeTeX replaces it, hence two factors; both land the
+% word gap at ~1.6x the letter gap. fontspec rejects WordSpace inside
+% \addfontfeatures, so \spaceskip.
+\ifXeTeX
+  \newcommand{\nb@wordspace}{0.016em}
+\else
+  \newcommand{\nb@wordspace}{0.006em}
+\fi
+
+\newcommand{\tracked}[2][60]{%
+  {\addfontfeature{LetterSpace=#1}%
+   \spaceskip=\dimexpr\nb@wordspace*#1\relax\relax #2}}

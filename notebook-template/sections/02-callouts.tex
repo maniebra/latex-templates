@@ -1,0 +1,137 @@
+\chapter{Callouts}
+
+Callouts follow Obsidian's shape: a tinted body, a saturated left bar, and an
+icon plus title in the callout's own colour. They break across pages, so a
+long one will not wreck the layout.
+
+\section{The stock set}
+
+\begin{note}
+The title defaults to the callout's name. Pass an argument to override it:
+\texttt{\textbackslash begin\{note\}[Something else]}.
+\end{note}
+
+\begin{tip}[Use the right one]
+Fourteen types ship by default. Resist using more than three or four in a
+single document — the whole point is that a callout stands out, and that
+stops being true once every paragraph is one.
+\end{tip}
+
+\begin{warning}
+Callouts nest badly inside tables and floats. If you need one there, put the
+content in the callout and the callout in the flow, not the other way round.
+\end{warning}
+
+\begin{caution}[Data loss]
+\texttt{git reset --hard} discards uncommitted work with no undo. Check
+\texttt{git stash list} before you reach for it.
+\end{caution}
+
+\begin{example}[Adding your own]
+One line in \texttt{styles/callouts.sty}:
+
+\vspace{4pt}
+\texttt{\textbackslash newcallout\{aside\}\{grape\}\{\textbackslash faIcon\{feather\}\}\{Aside\}}
+\end{example}
+
+\begin{question}
+Should this be a callout, a footnote, or a margin note? If it interrupts the
+argument, callout. If it supports it, footnote. If it comments on it, margin.
+\end{question}
+
+\begin{success}
+All fourteen render, break, and nest one level deep.
+\end{success}
+
+\begin{quotebox}[Bringhurst]
+The typographic page is a map of the mind. It is also a map of the society
+that produced it.
+\end{quotebox}
+
+\section{Untitled asides}
+
+When you want the tint and the bar but no header line, use \texttt{aside}:
+
+\begin{aside}[teal]
+No icon, no title — just a marked passage. Good for translations, source
+notes, or a definition you want set apart without announcing itself.
+\end{aside}
+
+\section{Everything else}
+
+\begin{abstract}
+This chapter demonstrates callouts. That is all it does.
+\end{abstract}
+
+\begin{info}
+Colours come from \texttt{vars/colors.tex}. Change one there and every callout
+using it follows.
+\end{info}
+
+\begin{bug}[Known]
+\texttt{breakable} and \texttt{parbox=false} disagree about the last line's
+depth. It is off by a fraction of a point and nobody has ever noticed.
+\end{bug}
+
+\begin{idea}
+A callout whose title is a question and whose body is the answer reads better
+than most FAQ formatting.
+\end{idea}
+
+\begin{todo}
+\begin{tasks}
+  \task[done] Fourteen callout types
+  \task[done] Theorem boxes with per-chapter numbering
+  \task Sidenote-style callouts in the outer margin
+  \task A dark-paper variant
+\end{tasks}
+\end{todo}
+
+\begin{failure}
+Do not put a callout inside a callout inside a callout. It compiles. It
+should not.
+\end{failure}
+
+\section{Exercises}
+
+An \texttt{exercise} is a two-part box: everything before \verb|\tcblower| is
+the question, everything after it is the solution.
+
+\begin{exercise}[Telescoping sums]
+Show that $\sum_{k=1}^{n} \frac{1}{k(k+1)} = \frac{n}{n+1}$ for every
+$n \geq 1$.
+\tcblower
+Write $\frac{1}{k(k+1)} = \frac{1}{k} - \frac{1}{k+1}$. Summing, every term
+cancels against its neighbour except the first and the last, leaving
+$1 - \frac{1}{n+1} = \frac{n}{n+1}$.
+\end{exercise}
+
+The title is optional; without one the box is just numbered.
+
+\begin{exercise}
+Prove that there is no largest prime.
+\tcblower
+Suppose $p_1, \dots, p_n$ were all of them. Then $N = p_1 \cdots p_n + 1$ has
+a prime factor, and it is none of the $p_i$, since each leaves remainder 1.
+\end{exercise}
+
+\subsection{Leaving room to answer}
+
+When the solution belongs to the reader rather than the book, use
+\verb|\workspace| — a blank box on the same dot grid as the cover.
+
+\begin{exercise}[For the reader]
+Find all integers $n$ for which $n^2 + 1$ divides $n^3 + 1$.
+\end{exercise}
+
+\workspace
+
+It takes any \texttt{tcolorbox} key, so the height and the label are
+adjustable:
+
+\workspace[height=22mm, wslabel=Working]
+
+\begin{note}[Where the numbering comes from]
+Exercises count on their own chapter-local counter, so they are numbered
+independently of the theorem boxes in \cref{cha:typography}.
+\end{note}

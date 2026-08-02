@@ -1,0 +1,27 @@
+\begin{frame}[fragile]{Code blocks}
+    \begin{codebox}[language=Python]{fib.py}
+def fib(n):
+    a, b = 0, 1
+    for _ in range(n):
+        a, b = b, a + b
+    return a
+    \end{codebox}
+\end{frame}
+
+\begin{frame}[fragile]{Code from a file}
+    {\small Arguments are the title bar text and the path on disk, so the deck
+    never drifts from the code it shows.}
+
+    \vspace{0.2cm}
+    \codefile[language=Python]{code/example.py}{code/example.py}
+\end{frame}
+
+\begin{frame}[fragile]{Another language}
+    \begin{codebox}[language=SQL]{report.sql}
+select date_trunc('month', created_at) as month, count(*) as shipped
+from orders
+where status = 'shipped'
+group by 1
+order by 1;
+    \end{codebox}
+\end{frame}

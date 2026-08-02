@@ -1,0 +1,89 @@
+\chapter{Tables and lists}
+
+Tables use tabularray. There are no vertical rules anywhere in this template,
+and there should not be any in yours — a tinted header row and generous row
+padding separate columns perfectly well.
+
+\section{A plain table}
+
+\begin{nbtable}{colspec = {lXr}, width = \linewidth}{%
+  Font families used, and where each one is applied.}
+  Family & Role & Weights \\
+  Inter & Body text, UI chrome, captions & 400--700 \\
+  Lexend & Headings, cover, part pages & 300--800 \\
+  SF Mono & Code blocks and inline chips & 400--700 \\
+  Latin Modern Math & Mathematics & — \\
+\end{nbtable}
+
+\section{Zebra striping}
+
+Past roughly eight rows, alternating fills help the eye track across. Below
+that they are noise.
+
+\begin{nbtablez}{colspec = {lXll}, width = \linewidth}{%
+  Build targets and their current state.}
+  Target & Description & Time & Status \\
+  \texttt{pdf} & Full build with highlighting & 12\,s & \status{green}{Passing} \\
+  \texttt{draft} & Skips minted, fonts only & 3\,s & \status{green}{Passing} \\
+  \texttt{watch} & Rebuild on save & — & \status{green}{Passing} \\
+  \texttt{a4} & Reflow for A4 paper & 13\,s & \status{yellow}{Flaky} \\
+  \texttt{print} & CMYK conversion & 20\,s & \status{red}{Failing} \\
+  \texttt{epub} & Not implemented & — & \status{gray}{Skipped} \\
+  \texttt{lint} & ChkTeX over sections & 1\,s & \status{green}{Passing} \\
+  \texttt{clean} & Remove aux files & — & \status{green}{Passing} \\
+\end{nbtablez}
+
+\begin{note}[Column specs]
+\texttt{X} is the stretchy column — give it the prose and let the rest size to
+content. \texttt{colspec = \{lXr\}} covers most tables you will ever write.
+\end{note}
+
+\section{Lists}
+
+Bullets take the accent colour at level one and fade at deeper levels:
+
+\begin{itemize}
+  \item A first-level item, in the accent colour.
+  \begin{itemize}
+    \item Second level, hollow and muted.
+    \begin{itemize}
+      \item Third level, a plain dash.
+    \end{itemize}
+  \end{itemize}
+  \item Spacing is tightened from LaTeX's defaults, which are set for
+        double-spaced manuscripts nobody prints any more.
+\end{itemize}
+
+Numbered lists get a semibold accent numeral:
+
+\begin{enumerate}
+  \item Edit \texttt{vars/colors.tex} and \texttt{vars/meta.tex}.
+  \item Write in \texttt{sections/}.
+  \item Add each file to \texttt{main.tex}.
+  \item Run \cmd{latexmk -lualatex -shell-escape main.tex}.
+\end{enumerate}
+
+\section{Task lists}
+
+\begin{tasks}
+  \task[done] Variable-weight Inter and Lexend
+  \task[done] Fourteen callouts, four theorem boxes
+  \task[done] Chrome-barred code blocks
+  \task Bibliography styling
+  \task An index worth reading
+\end{tasks}
+
+\section{Figures}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.6\linewidth}{\vspace{22mm}\centering
+    \color{inkfaint}\itshape your figure here\vspace{22mm}}}
+  \caption{Captions sit below figures and above tables, set small and muted
+    with the label in the accent colour.}
+  \label{fig:placeholder}
+\end{figure}
+
+Cross-references read as prose: see \cref{fig:placeholder}, and
+\cref{cha:tables} for the tables themselves.
+\label{cha:tables}

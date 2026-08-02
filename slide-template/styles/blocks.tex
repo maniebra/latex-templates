@@ -1,0 +1,30 @@
+
+\renewenvironment{block}[1]{%
+        \begin{tcolorbox}[
+                        enhanced, breakable, colback=white, colframe=gray!30,
+                        colbacktitle=surface, coltitle=accent, fonttitle=\titlefont\bfseries,
+                        boxrule=0.5pt, arc=3mm, drop shadow={opacity=0.1}, title=#1,
+                        coltext=ink,
+                        lefttitle=50pt,
+                        overlay={
+                                        \foreach \x/\c in {12pt/dotRed, 24pt/dotYellow, 36pt/dotGreen} {
+                                                        \fill[\c] ([xshift=\x]title.west) circle (3.5pt);
+                                                }
+                                }
+                ]}
+                {\end{tcolorbox}}
+
+\renewenvironment{alertblock}[1]{%
+        \begin{tcolorbox}[
+                        enhanced, breakable, colback=surface, colframe=gray!30,
+                        colbacktitle=surface, coltitle=alert, fonttitle=\titlefont\bfseries,
+                        boxrule=0.5pt, arc=3mm, drop shadow={opacity=0.1}, title=#1,
+                        coltext=ink,
+                        lefttitle=50pt,
+                        overlay={
+                                        \foreach \x/\c in {12pt/dotRed, 24pt/dotYellow, 36pt/dotGreen} {
+                                                        \fill[\c] ([xshift=\x]title.west) circle (3.5pt);
+                                                }
+                                }
+                ]}
+                {\end{tcolorbox}}
