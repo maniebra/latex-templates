@@ -1,0 +1,83 @@
+\chapter{کد}
+
+بلوک‌های کد با \lr{minted} و پایتون‌های \lr{Pygments} رنگ‌آمیزی می‌شوند و در
+کادری با نوار بالایی می‌نشینند که نام زبان و در صورت وجود نام فایل را نشان
+می‌دهد. کد همیشه از چپ به راست می‌ماند، حتی وسط متن فارسی. برای کامپایل به
+\lr{\texttt{-shell-escape}} نیاز دارید.
+
+\section{بلوکی با نام فایل}
+
+\begin{code}{python}{fib.py}
+from functools import lru_cache
+
+@lru_cache(maxsize=None)
+def fib(n: int) -> int:
+    """Nothing clever. The cache does the work."""
+    return n if n < 2 else fib(n - 1) + fib(n - 2)
+
+print([fib(n) for n in range(10)])
+\end{code}
+
+اگر قطعه کد به فایلی تعلق ندارد، آرگومان دوم را خالی بگذارید:
+
+\begin{code}{rust}{}
+fn main() {
+    let total: u32 = (1..=100).filter(|n| n % 3 == 0 || n % 5 == 0).sum();
+    println!("{total}");
+}
+\end{code}
+
+\section{زبان‌های دیگر}
+
+\begin{code}{sql}{report.sql}
+select
+  date_trunc('month', created_at) as month,
+  count(*) filter (where status = 'shipped') as shipped
+from orders
+where created_at >= now() - interval '1 year'
+group by 1
+order by 1;
+\end{code}
+
+\section{ترمینال}
+
+خروجی پوسته روی زمینه‌ی تیره می‌نشیند، چون ترمینال همین شکلی است و وانمود
+کردن به چیز دیگر به کسی کمک نمی‌کند.
+
+\begin{terminal}
+$ latexmk -xelatex -shell-escape main.tex
+Latexmk: Run number 1 of rule 'xelatex'
+Output written on main.pdf (24 pages, 412918 bytes).
+Latexmk: All targets (main.pdf) are up-to-date
+\end{terminal}
+
+\section{متن بدون رنگ‌آمیزی}
+
+برای خروجی، لاگ، یا هرچه که \lr{Pygments} فقط خرابش می‌کند:
+
+\begin{plaincode}
+notebook-template/
+├── styles/     فایل‌های سبک، هر کدام یک وظیفه
+├── fonts/      XM Yekan, Inter, SF Mono
+├── vars/       رنگ‌ها و مشخصات — این‌ها را ویرایش کنید
+├── sections/   نوشته‌ی خودتان
+└── main.tex
+\end{plaincode}
+
+\section{درون‌خطی}
+
+برای پاک‌کردن فایل‌های کمکی \cmd{latexmk -c} و برای حذف خود \lr{PDF}
+\cmd{latexmk -C} را اجرا کنید. حافظه‌ی نهان \lr{minted} در
+\cmd{\_minted-main/} می‌ماند و از پیش در \lr{\texttt{.gitignore}} هست.
+
+\begin{tip}[گنجاندن فایل واقعی]
+\lr{\texttt{\textbackslash inputcode\{python\}\{src/model.py\}}} فایل را
+مستقیم از دیسک می‌خواند، پس نوشته هیچ‌وقت از کدی که توضیحش می‌دهد عقب
+نمی‌ماند.
+\end{tip}
+
+\begin{note}[تغییر شِمای رنگ]
+شِمای رنگ‌آمیزی یک‌جا در \lr{\texttt{styles/code.sty}} تنظیم می‌شود
+(\lr{\texttt{style = friendly}}). با \cmd{pygmentize -L styles} بقیه را
+ببینید؛ \lr{\texttt{tango}} و \lr{\texttt{xcode}} روی کاغذ خوب چاپ می‌شوند.
+\end{note}

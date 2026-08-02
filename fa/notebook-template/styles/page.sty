@@ -1,0 +1,77 @@
+\ProvidesPackage{styles/page}[2026/08/02 Page geometry, headers, footers]
+% 170x240mm trim. The wide outer margin holds \sidenote.
+
+\RequirePackage[
+  paperwidth  = 17cm,
+  paperheight = 24cm,
+  inner       = 20mm,
+  outer       = 34mm,
+  top         = 22mm,
+  bottom      = 24mm,
+  marginparwidth = 24mm,
+  marginparsep   = 5mm,
+  headheight  = 14pt,
+  headsep     = 7mm,
+  footskip    = 12mm,
+]{geometry}
+
+\RequirePackage{fancyhdr}
+\RequirePackage{emptypage}   % truly blank versos before chapters
+
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+\newcommand{\nb@hairline}{\textcolor{rule}{\rule{\linewidth}{0.4pt}}}
+
+% verso = book title, recto = current section
+\renewcommand{\chaptermark}[1]{\markboth{#1}{}}
+\renewcommand{\sectionmark}[1]{\markright{#1}}
+
+\newcommand{\nb@runhead}[1]{%
+  \textcolor{inkfaint}{\uimed\fontsize{7.4}{7.4}\selectfont#1}}
+\newcommand{\nb@folio}[1]{%
+  \textcolor{inkmuted}{\uisemi\fontsize{8.4}{8.4}\selectfont #1}}
+
+\fancypagestyle{notebook}{%
+  \fancyhf{}
+  \fancyhead[LE]{\nb@runhead{\nbShortTitle}}
+  \fancyhead[RO]{\nb@runhead{\rightmark}}
+  \fancyfoot[LE]{\nb@folio{\thepage}}
+  \fancyfoot[RO]{\nb@folio{\thepage}}
+  \fancyhead[C]{\raisebox{-6pt}[0pt][0pt]{\makebox[\linewidth]{\nb@hairline}}}
+}
+
+% Chapter openers: folio only
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[LE,RO]{\nb@folio{\thepage}}
+}
+
+% Cover, colophon: nothing
+\fancypagestyle{bare}{\fancyhf{}}
+
+\pagestyle{notebook}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.62\baselineskip}
+\linespread{1.20}
+
+\widowpenalty=10000
+\clubpenalty=10000
+\raggedbottom
+
+\RequirePackage{marginnote}
+\renewcommand*{\marginfont}{%
+  \uimed\fontsize{7.1}{9.3}\selectfont\color{inkmuted}}
+\newcommand{\sidenote}[1]{\marginnote{\raggedright #1}}
+
+\RequirePackage[
+  colorlinks = true,
+  linkcolor  = accent,
+  citecolor  = teal,
+  urlcolor   = accent,
+  linktoc    = all,
+  bookmarksnumbered = true,
+  pdfborder  = {0 0 0},
+]{hyperref}
+\RequirePackage{bookmark}
+\urlstyle{same}

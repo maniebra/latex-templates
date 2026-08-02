@@ -1,0 +1,89 @@
+\chapter{جدول‌ها و فهرست‌ها}
+
+جدول‌ها با \lr{tabularray} ساخته می‌شوند. در این قالب هیچ خط عمودی وجود ندارد
+و در قالب شما هم نباید باشد — یک سطر عنوان رنگی و فاصله‌ی کافی میان سطرها،
+ستون‌ها را به‌خوبی از هم جدا می‌کند.
+
+\section{جدول ساده}
+
+\begin{nbtable}{colspec = {lXr}, width = \linewidth}{%
+  قلم‌های به‌کاررفته و جای استفاده‌ی هرکدام.}
+  خانواده & نقش & وزن‌ها \\
+  \lr{XM Yekan} & متن، عنوان‌ها، عناصر رابط & یک وزن \\
+  \lr{Inter} & متن لاتین درون جمله & ۴۰۰--۷۰۰ \\
+  \lr{SF Mono} & بلوک‌های کد و تراشه‌های درون‌خطی & ۴۰۰--۷۰۰ \\
+  \lr{Latin Modern Math} & ریاضیات & — \\
+\end{nbtable}
+
+\section{سطرهای یک‌درمیان}
+
+از حدود هشت سطر به بالا، رنگ‌آمیزی یک‌درمیان به چشم کمک می‌کند سطر را گم
+نکند. کمتر از آن فقط شلوغی است.
+
+\begin{nbtablez}{colspec = {lXll}, width = \linewidth}{%
+  هدف‌های ساخت و وضعیت کنونی‌شان.}
+  هدف & توضیح & زمان & وضعیت \\
+  \lr{\texttt{pdf}} & ساخت کامل با رنگ‌آمیزی کد & ۱۲ ثانیه & \status{green}{سالم} \\
+  \lr{\texttt{draft}} & بدون \lr{minted}، فقط قلم‌ها & ۳ ثانیه & \status{green}{سالم} \\
+  \lr{\texttt{watch}} & ساخت دوباره هنگام ذخیره & — & \status{green}{سالم} \\
+  \lr{\texttt{a4}} & بازچینش برای کاغذ \lr{A4} & ۱۳ ثانیه & \status{yellow}{ناپایدار} \\
+  \lr{\texttt{print}} & تبدیل به \lr{CMYK} & ۲۰ ثانیه & \status{red}{خراب} \\
+  \lr{\texttt{epub}} & پیاده‌سازی نشده & — & \status{gray}{رد شد} \\
+  \lr{\texttt{lint}} & اجرای \lr{ChkTeX} روی فصل‌ها & ۱ ثانیه & \status{green}{سالم} \\
+  \lr{\texttt{clean}} & حذف فایل‌های کمکی & — & \status{green}{سالم} \\
+\end{nbtablez}
+
+\begin{note}[مشخصات ستون]
+\lr{\texttt{X}} ستون کشسان است — متن را به آن بدهید و بگذارید بقیه به اندازه‌ی
+محتوایشان جا بگیرند. \lr{\texttt{colspec = \{lXr\}}} پاسخگوی بیشتر جدول‌هایی
+است که خواهید نوشت.
+\end{note}
+
+\section{فهرست‌ها}
+
+نشانه‌ی گلوله در سطح اول رنگ تأکید می‌گیرد و در سطح‌های عمیق‌تر کم‌رنگ می‌شود:
+
+\begin{itemize}
+  \item آیتم سطح اول، با رنگ تأکید.
+  \begin{itemize}
+    \item سطح دوم، توخالی و کم‌رنگ.
+    \begin{itemize}
+      \item سطح سوم، یک خط تیره‌ی ساده.
+    \end{itemize}
+  \end{itemize}
+  \item فاصله‌ها از پیش‌فرض‌های لاتک جمع‌تر شده‌اند.
+\end{itemize}
+
+فهرست‌های شماره‌دار عدد را با رنگ تأکید می‌گیرند:
+
+\begin{enumerate}
+  \item \lr{\texttt{vars/colors.tex}} و \lr{\texttt{vars/meta.tex}} را ویرایش کنید.
+  \item در \lr{\texttt{sections/}} بنویسید.
+  \item هر فایل را به \lr{\texttt{main.tex}} اضافه کنید.
+  \item دستور \cmd{latexmk -xelatex main.tex} را اجرا کنید.
+\end{enumerate}
+
+\section{فهرست کارها}
+
+\begin{tasks}
+  \task[done] قلم فارسی \lr{XM Yekan}
+  \task[done] چهارده کادر و چهار کادر قضیه
+  \task[done] بلوک‌های کد با نوار بالایی
+  \task سبک‌دهی به کتاب‌نامه
+  \task نمایه‌ای که ارزش خواندن داشته باشد
+\end{tasks}
+
+\section{شکل‌ها}
+
+\begin{figure}[htbp]
+  \centering
+  \fbox{\parbox{0.6\linewidth}{\vspace{22mm}\centering
+    \color{inkfaint}شکل شما اینجا\vspace{22mm}}}
+  \caption{عنوان شکل زیر آن و عنوان جدول بالای آن می‌نشیند، ریز و کم‌رنگ، با
+    برچسبی به رنگ تأکید.}
+  \label{fig:placeholder}
+\end{figure}
+
+ارجاع‌ها مثل متن عادی خوانده می‌شوند: \cref{fig:placeholder} را ببینید، و
+\cref{cha:tables} را برای خود جدول‌ها.
+\label{cha:tables}

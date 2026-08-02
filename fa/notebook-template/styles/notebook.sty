@@ -1,0 +1,74 @@
+\ProvidesPackage{styles/notebook}[2026/08/03 Notebook template, Persian]
+% Single entry point; main.tex loads only this.
+% Order matters: vars, then fonts, then the rest, and xepersian dead last —
+% bidi patches what is already loaded, so anything after it stays LTR.
+
+\RequirePackage{xcolor}
+\input{vars/colors.tex}
+\input{vars/meta.tex}
+
+\RequirePackage{styles/fonts}
+\RequirePackage{styles/page}
+\RequirePackage{styles/headings}
+\RequirePackage{styles/callouts}
+\RequirePackage{styles/code}
+\RequirePackage{styles/pills}
+\RequirePackage{styles/tables}
+\RequirePackage{styles/cover}
+
+\hypersetup{
+  pdftitle  = {\nbTitle},
+  pdfauthor = {\nbAuthor},
+  pdfsubject= {\nbSubtitle},
+}
+
+\RequirePackage{amsmath}
+
+% Pull-quote
+\renewenvironment{quotation}
+  {\begin{list}{}{\leftmargin 1.4em \rightmargin 1em}\item[]%
+   \color{inkmuted}}
+  {\end{list}}
+
+% Footnotes
+\renewcommand{\footnoterule}{\vspace*{6pt}{\color{rule}\hrule width 60pt height 0.4pt}\vspace*{5pt}}
+\RequirePackage[bottom, hang, flushmargin]{footmisc}
+\renewcommand{\footnotesize}{\fontsize{7.4}{10.2}\selectfont}
+
+% Cross-references
+\RequirePackage{cleveref}
+\crefname{chapter}{فصل}{فصل‌های}
+\crefname{section}{بخش}{بخش‌های}
+\crefname{table}{جدول}{جدول‌های}
+\crefname{figure}{شکل}{شکل‌های}
+% Composite numbers (4.1) reverse inside an RTL run unless pinned LTR.
+\creflabelformat{chapter}{\nbnum{#2#1#3}}
+\creflabelformat{section}{\nbnum{#2#1#3}}
+\creflabelformat{table}{\nbnum{#2#1#3}}
+\creflabelformat{figure}{\nbnum{#2#1#3}}
+
+% ---------------------------------------------------------------- Persian
+\RequirePackage{xepersian}
+
+\settextfont{XM-Yekan.ttf}[
+  Path         = fonts/,
+  AutoFakeBold = 2.5,
+  Scale        = 1.0,
+]
+\setlatintextfont{Inter-400.ttf}[
+  Path           = fonts/,
+  ItalicFont     = Inter-Italic-400.ttf,
+  BoldFont       = Inter-650.ttf,
+  BoldItalicFont = Inter-Italic-650.ttf,
+]
+\setdigitfont{XM-Yekan.ttf}[Path = fonts/]
+
+% The digit mapping turns '.' into the Persian decimal separator, which
+% makes 3.1 read as a number rather than as chapter 3, section 1. Persian
+% books separate the two with a dash.
+\SepMark{-}
+
+\nbChapterFormat   % xepersian overrode titlesec's chapter format
+
+% Latin runs inside a Persian paragraph: \lr{Clean Architecture}
+% Persian runs inside an LTR box: \rl{...}

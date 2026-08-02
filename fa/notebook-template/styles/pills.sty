@@ -1,0 +1,67 @@
+\ProvidesPackage{styles/pills}[2026/08/02 Pills, badges, tags, keys]
+%   \pill[red]{deprecated}      tinted
+%   \solidpill[green]{shipped}  filled
+%   \outlinepill[teal]{beta}    hollow
+%   \tagpill{\#linear-algebra}
+%   \kbd{Ctrl}+\kbd{K}
+%   \status{green}{Passing}     dot + label, for tables
+%   \hl{marked}
+
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+
+% No letter-spacing: at this size it spells the word out, and LetterSpace
+% pads after the final glyph, pushing the label off-centre in the capsule.
+\newcommand{\pill@font}{\uisemi\fontsize{7.1}{7.1}\selectfont}
+
+% Tinted, the default.
+\newtcbox{\pill}[1][accent]{
+  on line, nobeforeafter,
+  colback = #1!12!paper, colframe = #1!25!paper,
+  boxrule = 0.5pt, arc = 5pt,
+  left = 6pt, right = 6pt, top = 1.6pt, bottom = 1.6pt, boxsep = 0pt,
+  fontupper = {\pill@font\color{#1!75!ink}},
+}
+
+% Filled.
+\newtcbox{\solidpill}[1][accent]{
+  on line, nobeforeafter,
+  colback = #1, colframe = #1,
+  boxrule = 0pt, arc = 5pt,
+  left = 6pt, right = 6pt, top = 1.6pt, bottom = 1.6pt, boxsep = 0pt,
+  fontupper = {\pill@font\color{paper}},
+}
+
+% Hollow.
+\newtcbox{\outlinepill}[1][accent]{
+  on line, nobeforeafter,
+  colback = paper, colframe = #1!45!paper,
+  boxrule = 0.7pt, arc = 5pt,
+  left = 6pt, right = 6pt, top = 1.6pt, bottom = 1.6pt, boxsep = 0pt,
+  fontupper = {\pill@font\color{#1!80!ink}},
+}
+
+\newtcbox{\tagpill}[1][accent]{  % \tag is amsmath's
+  on line, nobeforeafter,
+  colback = #1!10!paper, colframe = #1!10!paper,
+  boxrule = 0pt, arc = 3pt,
+  left = 4pt, right = 4pt, top = 1.2pt, bottom = 1.2pt, boxsep = 0pt,
+  fontupper = {\uimed\fontsize{7.4}{7.4}\selectfont\color{#1!80!ink}},
+}
+
+\newtcbox{\kbd}{
+  on line, nobeforeafter,
+  colback = paper, colframe = rule,
+  boxrule = 0.7pt, arc = 3pt,
+  left = 4pt, right = 4pt, top = 1.2pt, boxsep = 0pt,
+  bottom = 2.4pt,                       % the key's bottom edge
+  fontupper = {\uimed\fontsize{7.3}{7.3}\selectfont\color{inkmuted}},
+}
+
+\newcommand{\status}[2]{%
+  \tikz[baseline=-0.55ex]\fill[#1] (0,0) circle (2.1pt);\hspace{4pt}#2}
+
+\newcommand{\hl}[2][yellow]{%
+  \tcbox[on line, nobeforeafter, colback=#1!25!paper, colframe=#1!25!paper,
+         boxrule=0pt, arc=2pt, left=2pt, right=2pt, top=0.5pt, bottom=0.5pt,
+         boxsep=0pt]{#2}}

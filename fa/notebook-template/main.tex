@@ -1,0 +1,28 @@
+% latexmk -xelatex -shell-escape main.tex
+%
+% XeLaTeX only (xepersian). -shell-escape is required by minted.
+
+\documentclass[10pt, openright]{book}
+\usepackage{styles/notebook}
+
+\begin{document}
+
+\frontmatter
+\makecover
+\makecolophon{%
+  یادداشت‌هایی که از ۱۴۰۵ نوشته شده‌اند و تا وقتی به کار بیایند ادامه دارند.
+  همه‌چیز اینجا موقتی است.}
+
+{\hypersetup{linkcolor = ink}\tableofcontents}
+\cleardoublepage
+
+\mainmatter
+
+\include{sections/01-typography}
+\include{sections/02-callouts}
+\include{sections/03-code}
+\include{sections/04-tables}
+
+\backmatter
+
+\end{document}

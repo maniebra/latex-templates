@@ -1,0 +1,155 @@
+\ProvidesPackage{styles/headings}[2026/08/02 Book-like headings]
+% Chapter openers are a full-bleed accent panel. Section levels are told
+% apart by their mark (solid badge, tinted chip, square) as well as by size.
+
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+\RequirePackage{etoolbox}
+
+% Accent bar running out to the margin as a hairline.
+\newcommand{\nb@splitrule}[1][42pt]{%
+  \noindent
+  \textcolor{\nbAccent}{\rule[0pt]{#1}{2.5pt}}%
+  \textcolor{rule}{\rule[1pt]{\dimexpr\linewidth-#1\relax}{0.5pt}}}
+
+% Chapter opener panel, drawn in the shipout background layer in paper mm.
+% Panel occupies 168-240mm of a 170x240 trim. The heading box itself emits
+% nothing; \titlespacing reserves the room.
+%
+% No alpha here: xdvipdfmx drops pgf's transparency ExtGState resources, so
+% under XeLaTeX every translucent element renders solid. Fills are pre-mixed
+% against the accent ground instead (white!10!\nbAccent).
+\newcommand{\nb@panelbottom}{168}
+
+\newcommand{\nb@chapterpanel}[3]{% #1 kicker  #2 numeral (may be empty)  #3 title
+  \noindent
+  {\begin{tikzpicture}[remember picture, overlay]
+   \begin{scope}[shift={(current page.south west)},
+                 x=1mm, y=1mm, inner sep=0pt, outer sep=0pt]
+
+      \fill[\nbAccent] (0,\nb@panelbottom) rectangle (170,240);
+
+      \begin{scope}
+        \clip (0,\nb@panelbottom) rectangle (170,240);
+        \foreach \r in {26,48,70,92}
+          {\draw[white!15!\nbAccent, line width=0.6] (170,240) circle (\r);}
+        \foreach \x in {5,10,...,168}
+          \foreach \y in {170,175,...,238}
+            {\fill[white!10!\nbAccent] (\x,\y) circle (0.34);}
+      \end{scope}
+
+      \node[anchor=north east, text=white!75!\nbAccent,
+            font=\uisemi\fontsize{8}{8}\selectfont]
+        at (150,230) {\rl{#1}};
+
+      \ifblank{#2}{}{%
+        \node[anchor=north west, text=white!30!\nbAccent,
+              font=\displaylight\fontsize{62}{62}\selectfont]
+          at (20,232) {#2};}
+
+      \node[anchor=south east, text=white, text width=118mm,
+            align=flush right,
+            font=\displaybold\fontsize{27}{31}\selectfont]
+        at (150,178) {\rl{#3}};
+
+   \end{scope}
+  \end{tikzpicture}}%
+}
+
+\newcommand{\nb@drawchapter}[1]{%
+  \nb@chapterpanel{\chaptertitlename}{\nbnum{\thechapter}}{#1}}
+\newcommand{\nb@drawchapterplain}[1]{%
+  \nb@chapterpanel{\nbShortTitle}{}{#1}}
+
+% Numbering marks: solid badge (section), tinted chip (subsection),
+% square (subsubsection).
+\newtcbox{\nb@secbadge}{
+  on line, nobeforeafter,
+  colback = \nbAccent, colframe = \nbAccent,
+  boxrule = 0pt, arc = 3pt,
+  left = 5pt, right = 5pt, top = 3pt, bottom = 3pt, boxsep = 0pt,
+  fontupper = {\uibold\fontsize{8.8}{8.8}\selectfont\color{paper}},
+}
+
+\newtcbox{\nb@subchip}{
+  on line, nobeforeafter,
+  colback = \nbAccent!11!paper, colframe = \nbAccent!11!paper,
+  boxrule = 0pt, arc = 3pt,
+  left = 4.5pt, right = 4.5pt, top = 2pt, bottom = 2pt, boxsep = 0pt,
+  fontupper = {\uisemi\fontsize{8.4}{8.4}\selectfont\color{\nbAccent!85!ink}},
+}
+
+% \nb@drawchapter receives the title and paints it into the background.
+% The after-space clears the panel; measured off a rendered page, not
+% derived (the empty heading box contributes height of its own).
+% xepersian re-defines \@makechapterhead for RTL, which undoes titlesec's
+% chapter format. notebook.sty calls this again once xepersian is loaded.
+\newcommand{\nbChapterFormat}{%
+  \titleformat{\chapter}[display]{}{}{0pt}{\nb@drawchapter}%
+  \titlespacing*{\chapter}{0pt}{0pt}{42mm}%
+  \titleformat{name=\chapter,numberless}[display]{}{}{0pt}{\nb@drawchapterplain}%
+  \titlespacing*{name=\chapter,numberless}{0pt}{0pt}{42mm}%
+}
+\nbChapterFormat
+
+% Section. Split rule above, number hung out into the margin.
+\titleformat{\section}[hang]
+  {\nb@sectionrule\displaysemi\fontsize{15.8}{19.5}\selectfont\color{ink}}
+  {\raisebox{0.3ex}{\nb@secbadge{\nbnum{\thesection}}}\hspace{3mm}}
+  {0pt}{}
+\titlespacing*{\section}{0pt}{0.9\baselineskip}{0.6\baselineskip}
+
+\newcommand{\nb@sectionrule}{%
+  \mbox{}\par\nobreak
+  \vspace{-0.6\baselineskip}%
+  \nb@splitrule[18pt]\par\nobreak
+  \vspace{0.6\baselineskip}}
+
+% Subsection
+\titleformat{\subsection}
+  {\displaymed\fontsize{12.6}{15.8}\selectfont\color{ink}}
+  {\raisebox{0.2ex}{\nb@subchip{\nbnum{\thesubsection}}}\hspace{0.6em}}{0pt}{}
+\titlespacing*{\subsection}{0pt}{1.5\baselineskip}{0.4\baselineskip}
+
+% Subsubsection, set as a tracked uppercase label.
+\newcommand{\nb@ssslabel}[1]{#1}
+
+\titleformat{\subsubsection}
+  {\uisemi\fontsize{8}{12.1}\selectfont\color{inkmuted}}
+  {}{0pt}
+  {\textcolor{\nbAccent}{\rule[0.05ex]{4.5pt}{4.5pt}}\hspace{1.2em}\nb@ssslabel}
+\titlespacing*{\subsubsection}{0pt}{1.3\baselineskip}{0.35\baselineskip}
+
+% Run-in paragraph heading
+\titleformat{\paragraph}[runin]
+  {\uisemi\color{ink}}{}{0pt}{}[\;\textcolor{inkfaint}{\textbar}\;]
+\titlespacing*{\paragraph}{0pt}{0.8\baselineskip}{0.6em}
+
+% Table of contents
+\renewcommand{\contentsname}{فهرست مطالب}
+
+\titlecontents{chapter}[0pt]
+  {\addvspace{14pt}\displaysemi\fontsize{11.2}{14}\selectfont\color{ink}}
+  {\textcolor{\nbAccent}{\nbnum{\thecontentslabel}}\hspace{0.8em}}
+  {}
+  {\hfill\normalfont\uimed\small\color{inkfaint}\thecontentspage}
+
+\titlecontents{section}[16pt]
+  {\addvspace{3pt}\normalfont\fontsize{9.3}{12.1}\selectfont\color{inkmuted}}
+  {\nbnum{\thecontentslabel}\hspace{0.7em}}
+  {}
+  {\titlerule*[6pt]{\color{rule}.}\;\uimed\footnotesize\color{inkfaint}\thecontentspage}
+
+\setcounter{tocdepth}{1}
+\setcounter{secnumdepth}{3}
+
+% Part pages
+\titleformat{\part}[display]
+  {\raggedright}
+  {\uisemi\fontsize{8.4}{8.4}\selectfont\color{\nbAccent}بخش \nbnum{\thepart}}
+  {18pt}
+  {\displaylight\fontsize{37.2}{40.9}\selectfont\color{ink}}
+\titlespacing*{\part}{0pt}{80pt}{24pt}

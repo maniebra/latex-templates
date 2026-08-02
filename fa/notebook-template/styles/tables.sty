@@ -1,0 +1,82 @@
+\ProvidesPackage{styles/tables}[2026/08/02 Tables and lists]
+% tabularray. No vertical rules; a tinted header row and row padding separate.
+%
+%   \begin{nbtable}{colspec}{caption}  ... \end{nbtable}
+%   \begin{nbtablez}{colspec}{caption} ... \end{nbtablez}   (zebra)
+
+\RequirePackage{tabularray}
+\UseTblrLibrary{booktabs, varwidth}
+\RequirePackage{caption}
+
+\SetTblrInner{
+  rowsep    = 3.6pt,
+  colsep    = 8pt,
+  stretch   = 1.0,
+  hlines    = {0.4pt, rule},
+  vlines    = {0pt, white},
+  row{1}    = {bg = tablehead, font = \uisemi\fontsize{8.4}{11.2}\selectfont,
+               fg = ink, rowsep = 5pt},
+  hline{1}  = {0.9pt, inkfaint},
+  hline{2}  = {0.7pt, inkfaint},
+  hline{Z}  = {0.9pt, inkfaint},
+  cells     = {font = \fontsize{8.6}{11.5}\selectfont},
+}
+
+\NewDocumentEnvironment{nbtable}{m m}{%
+  \begin{table}[htbp]\centering
+  \caption{#2}%
+  \begin{tblr}{#1}%
+}{%
+  \end{tblr}\end{table}%
+}
+
+% Zebra variant; worth it past ~8 rows.
+\NewDocumentEnvironment{nbtablez}{m m}{%
+  \begin{table}[htbp]\centering
+  \caption{#2}%
+  \begin{tblr}{#1,
+    row{even} = {bg = tablezebra}, hlines = {0pt, white},
+    hline{1}  = {0.9pt, inkfaint}, hline{2} = {0.7pt, inkfaint},
+    hline{Z}  = {0.9pt, inkfaint}}%
+}{%
+  \end{tblr}\end{table}%
+}
+
+\captionsetup{
+  font       = {footnotesize, color = inkmuted},
+  labelfont  = {color = \nbAccent},
+  labelsep   = period,
+  skip       = 8pt,
+  justification = raggedright,
+  singlelinecheck = false,
+}
+\captionsetup[table]{position = top, skip = 6pt}
+
+\RequirePackage{enumitem}
+\RequirePackage{etoolbox}
+\RequirePackage{fontawesome5}
+\setlist{
+  topsep    = 0.35\baselineskip,
+  itemsep   = 0.22\baselineskip,
+  parsep    = 0pt,
+  leftmargin = 1.35em,
+}
+\setlist[itemize,1]{label = {\textcolor{\nbAccent}{\raisebox{0.15ex}{\scriptsize$\bullet$}}}}
+\setlist[itemize,2]{label = {\textcolor{inkfaint}{\raisebox{0.15ex}{\scriptsize$\circ$}}}}
+\setlist[itemize,3]{label = {\textcolor{inkfaint}{\scriptsize$-$}}}
+\setlist[enumerate,1]{label = {\uisemi\textcolor{\nbAccent}{\arabic*.}}}
+\setlist[enumerate,2]{label = {\textcolor{inkfaint}{\arabic*.}}}
+
+% \begin{tasks} \task[done] ... \end{tasks}
+\newlist{tasks}{itemize}{2}
+\setlist[tasks]{label = {}, leftmargin = 1.6em, itemsep = 0.2\baselineskip}
+% Braces are required: \faIcon[regular] would otherwise close \item's
+% optional argument at its own ].
+\newcommand{\task}[1][todo]{%
+  \item[{\ifstrequal{#1}{done}
+    {\textcolor{green}{\faIcon{check-square}}}
+    {\textcolor{inkfaint}{\faIcon[regular]{square}}}}]}
+
+\RequirePackage{graphicx}
+\RequirePackage{float}
+\graphicspath{{figures/}{images/}}
