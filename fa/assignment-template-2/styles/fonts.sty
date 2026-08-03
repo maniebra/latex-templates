@@ -1,0 +1,22 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fonts}[2026/08/03 قلم‌های تمرین]
+% قلم فارسی و قلم پیکسلی عنوان‌ها. باید پس از xepersian بارگذاری شود.
+
+\settextfont{XM Yekan}
+\setlatintextfont[Path=./fonts/]{Frutiger.ttf}
+
+\defpersianfont\pixelfont[Path=./fonts/]{Sorena-Pixel.ttf}
+
+% همان قلم پیکسلی برای متن لاتین، مثلاً نوار عنوان کادر کد.
+\newfontfamily\pixellatin[Path=./fonts/]{Sorena-Pixel.ttf}
+
+% شماره‌ها. عددی مانند ۵-۱ نباید با الگوریتم دوسویه جابه‌جا شود، اما \lr به
+% تنهایی رقم‌ها را لاتین می‌کند. \hwnum هر دو کار را می‌کند: جعبه‌ی چپ‌به‌راست
+% با قلمی که رقم‌ها را فارسی نگاشت می‌کند.
+\newfontfamily\hw@digitfont[Path=./fonts/, Mapping=farsidigits]{Sorena-Pixel.ttf}
+\newcommand{\hwnum}[1]{\lr{{\hw@digitfont #1}}}
+
+% جداکننده‌ی شماره‌ی بخش و زیربخش؛ نقطه شبیه ممیز خوانده می‌شود.
+\SepMark{-}
+
+\endinput

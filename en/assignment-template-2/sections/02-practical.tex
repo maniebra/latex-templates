@@ -1,0 +1,29 @@
+\section{A question with a code snippet (15 points)}
+
+Read the snippet below and explain what it does, and why.
+
+\begin{neocode}[neocodetitlefont=\small\pixelfont]{config.yaml}
+listen-on: 80
+
+paths:
+  "/":
+    type: redirect
+    target: "http://localhost:8080/index.html"
+  "/dir/":
+    type: servedir
+    target: "/home/user/movies/"
+\end{neocode}
+
+\texttt{neocode} takes the title bar text as its mandatory argument and any
+\texttt{listings} key in the optional one, e.g.
+\texttt{[listing options=\{language=Python\}]}. Inside the block,
+\texttt{@\ldots@} escapes back into \LaTeX{} so macros like
+\texttt{\textbackslash coursecode} still expand.
+
+\subsection{A checklist}
+
+\begin{neochecklist}
+    \citem A checked item, written with \texttt{\textbackslash citem}
+    \item An unchecked item, written with \texttt{\textbackslash item}
+    \item Another thing to tick off before submitting
+\end{neochecklist}

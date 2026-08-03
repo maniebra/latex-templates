@@ -1,0 +1,39 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{boxes}[2026/08/03 کادر نئوبروتالیستی]
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins, breakable}
+
+\tcbset{
+    neotitlefont/.store in=\neobox@titlefont,
+    neotitlefont=\bfseries % Default: Bold
+}
+
+\tcbset{
+    neobrutal/.style={
+        enhanced,
+        colback=paper,
+        colframe=ink,
+        coltitle=paper,
+        colbacktitle=ink,
+        boxrule=1.8pt,
+        sharp corners,
+        shadow={3.5pt}{-3.5pt}{0pt}{ink}, 
+        fonttitle=\neobox@titlefont,
+        attach boxed title to top left={xshift=4mm, yshift=-3mm},
+        boxed title style={
+            sharp corners,
+            boxrule=1.8pt,
+            colframe=ink,
+            outer arc=0pt,
+        },
+        top=3mm,
+        bottom=3mm,
+    }
+}
+
+\newtcolorbox{neobox}[2][]{
+    neobrutal,
+    title={#2},
+    #1 % This allows passing 'neotitlefont' locally
+}

@@ -7,6 +7,7 @@ en/  fa/
 ├── notebook-template        book class, for long notes
 ├── slide-template           beamer, for lectures
 ├── assignment-template-1    article, for homework handouts
+├── assignment-template-2    article, exam sheet, browser-window cover
 └── student-solution         article, for answering one of those
                              (notebook typography, monochrome)
 ```
