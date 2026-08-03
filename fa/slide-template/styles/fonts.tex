@@ -1,0 +1,19 @@
+\usefonttheme{professionalfonts}
+
+% XM Yekan carries the Persian text, Inter the Latin runs inside it. The
+% Persian and digit faces are set in main.tex, once xepersian is loaded --
+% \settextfont and friends do not exist before that.
+%
+% XM Yekan ships a single weight, so bold is synthesised.
+
+\setmainfont{Inter.ttf}[Path = ./fonts/, AutoFakeBold = 1.5, AutoFakeSlant = 0.2]
+\setsansfont{Inter.ttf}[Path = ./fonts/, AutoFakeBold = 1.5, AutoFakeSlant = 0.2]
+
+\newfontfamily\titlefont{XM-Yekan.ttf}[Path = ./fonts/, AutoFakeBold = 2.5]
+
+\setbeamerfont{title}{family=\titlefont, size=\Huge, series=\bfseries}
+\setbeamerfont{subtitle}{family=\titlefont, size=\large}
+\setbeamerfont{author}{family=\titlefont, size=\Large}
+\setbeamerfont{institute}{family=\titlefont, size=\normalsize}
+\setbeamerfont{date}{family=\titlefont, size=\normalsize}
+\setbeamerfont{frametitle}{family=\titlefont, series=\bfseries, size=\Large}

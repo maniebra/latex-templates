@@ -1,0 +1,53 @@
+
+\lstdefinestyle{vsdark}{
+    basicstyle=\ttfamily\small\color{vsdarkfg},
+    keywordstyle=\color{vsdarkkw}\bfseries,
+    stringstyle=\color{vsdarkstring},
+    commentstyle=\color{vsdarkcomment}\itshape,
+    showstringspaces=false,
+    breaklines=true,
+    tabsize=4
+}
+
+
+\newtcbinputlisting{\codefile}[3][]{
+    before upper=\setLTR,
+    enhanced, breakable,
+    colback=vsdarkbg, colframe=vsdarkframe, width=\textwidth,
+    boxrule=0.5pt, arc=3mm,
+    colbacktitle=vsdarktitlebg, coltitle=vsdarkfg,
+    fonttitle=\bfseries\scriptsize,
+    title={\rule[-4pt]{0pt}{14pt}#2}, halign title=center,
+    toptitle=2pt, bottomtitle=2pt, titlerule=0pt,
+    drop shadow,
+    colupper=vsdarkfg,
+    overlay={
+            \fill[dotRed] ([xshift=12pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+            \fill[dotYellow] ([xshift=24pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+            \fill[dotGreen] ([xshift=36pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+        },
+    listing file={#3},
+    listing only,
+    listing options={style=vsdark, #1} 
+}
+
+
+\newtcblisting{codebox}[2][]{
+    before upper=\setLTR,
+    enhanced, breakable,
+    colback=vsdarkbg, colframe=vsdarkframe, width=\textwidth,
+    boxrule=0.5pt, arc=3mm,
+    colbacktitle=vsdarktitlebg, coltitle=vsdarkfg,
+    fonttitle=\bfseries\scriptsize,
+    title={\rule[-4pt]{0pt}{14pt}#2}, halign title=center,
+    toptitle=2pt, bottomtitle=2pt, titlerule=0pt,
+    drop shadow,
+    colupper=vsdarkfg,
+    overlay={
+            \fill[dotRed] ([xshift=12pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+            \fill[dotYellow] ([xshift=24pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+            \fill[dotGreen] ([xshift=36pt,yshift=-13pt]frame.north west) circle[radius=3.5pt];
+        },
+    listing only,
+    listing options={style=vsdark, #1} 
+}

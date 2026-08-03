@@ -1,0 +1,6 @@
+\setbeamertemplate{background canvas}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[surface!50] (current page.south west) rectangle (current page.north east);
+        \draw[step=1cm, gray!20, thin] (current page.south west) grid (current page.north east);
+    \end{tikzpicture}%
+}

@@ -1,0 +1,16 @@
+\setbeamertemplate{headline}{%
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[black!90] (current page.north west) rectangle ([yshift=-18pt]current page.north east);
+
+        \node[anchor=east, text=white] at ([xshift=-10pt, yshift=-9pt]current page.north east) {
+            \scriptsize\textbf{\rl{\insertsubtitle}}%
+            \hspace{4pt}%
+            \raisebox{-0.25\height}{\includegraphics[width=4mm]{\deckLogo}}%
+        };
+
+        \node[anchor=west, text=white] at ([xshift=15pt, yshift=-9pt]current page.north west) {
+            \textbf{\scriptsize\rl{\insertdate}}
+        };
+    \end{tikzpicture}%
+    \vspace{25pt}
+}

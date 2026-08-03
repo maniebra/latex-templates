@@ -1,0 +1,52 @@
+% latexmk -xelatex main.tex
+%
+% XeLaTeX only (xepersian).
+
+\documentclass[aspectratio=169,11pt]{beamer}
+
+\usepackage{tikz}
+\usepackage{tcolorbox}
+\usepackage{fontspec}
+\usepackage{etoolbox}
+\usepackage{listings}
+\usepackage[T1]{fontenc}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{float}
+\usepackage{multicol}
+\tcbuselibrary{listings, skins, breakable}
+
+\input{vars/meta.tex}
+\input{vars/colors.tex}
+
+\input{styles/fonts.tex}
+\input{styles/blocks.tex}
+\input{styles/boxes.tex}
+\input{styles/code.tex}
+\input{styles/headline.tex}
+\input{styles/footline.tex}
+\input{styles/background.tex}
+\input{styles/cover.tex}
+\input{styles/class-activity.tex}
+
+% Last, always: bidi only patches what is already loaded.
+\usepackage{xepersian}
+\settextfont{XM-Yekan.ttf}[Path = ./fonts/, AutoFakeBold = 2.5]
+\setlatintextfont{Inter.ttf}[Path = ./fonts/, AutoFakeBold = 1.5, AutoFakeSlant = 0.2]
+\setdigitfont{XM-Yekan.ttf}[Path = ./fonts/]
+
+% xepersian swaps beamer's list markers for RTL triangles; keep the dots.
+\setbeamertemplate{itemize item}{\(\bullet\)}
+\setbeamertemplate{itemize subitem}{\(\circ\)}
+\setbeamertemplate{itemize subsubitem}{\tiny\(\blacksquare\)}
+
+\begin{document}
+
+\makecover
+
+\input{sections/01-boxes.tex}
+\input{sections/02-blocks.tex}
+\input{sections/03-code.tex}
+\input{sections/04-layout.tex}
+
+\end{document}

@@ -1,0 +1,44 @@
+\begin{frame}{پنل‌ها}
+    \begin{panel}{پنلی با عنوان}
+        \begin{itemize}
+            \item \lr{\texttt{panel}} عنوان را به عنوان آرگومان اجباری می‌گیرد.
+            \item بین اسلایدها می‌شکند، پس فهرست بلند سرریز نمی‌کند.
+            \item هر کلید \lr{\texttt{tcolorbox}} در آرگومان اختیاری می‌آید.
+        \end{itemize}
+    \end{panel}
+\end{frame}
+
+\begin{frame}{دو پنل در یک اسلاید}
+    \begin{panel}[height=2.6cm]{ارتفاع ثابت}
+        با کلید \lr{\texttt{height}} پنل‌هایی را که کنار هم می‌نشینند هم‌اندازه کنید.
+    \end{panel}
+
+    \vspace{0.3cm}
+
+    \begin{panel}[height=2.6cm]{پنل دوم}
+        همه‌ی رنگ‌ها از \lr{\texttt{vars/colors.tex}} می‌آیند؛ یکی را آنجا عوض
+        کنید و همه‌ی پنل‌ها تغییر می‌کنند.
+    \end{panel}
+\end{frame}
+
+\begin{frame}{پنل دوتکه}
+    \begin{panelsplit}
+        \centering
+        \tikz[baseline]\node[draw=gray!40, fill=surface, rounded corners=2pt,
+            minimum width=3.2cm, minimum height=2.4cm, text=gray]{شکل شما اینجا};
+        \tcblower
+        \begin{itemize}
+            \item \lr{\texttt{panelsplit}} در محل \lr{\texttt{\textbackslash tcblower}} دو تکه می‌شود.
+            \item ستون نخست به‌طور پیش‌فرض یک‌سوم پهنا را می‌گیرد.
+            \item با \lr{\texttt{[lefthand ratio=0.5]}} تغییرش دهید.
+        \end{itemize}
+    \end{panelsplit}
+\end{frame}
+
+\begin{frame}{یک شکل تنها}
+    \begin{panel}{شکل}
+        \centering
+        \tikz[baseline]\node[draw=gray!40, fill=surface, rounded corners=2pt,
+            minimum width=6cm, minimum height=3cm, text=gray]{شکل شما اینجا};
+    \end{panel}
+\end{frame}
