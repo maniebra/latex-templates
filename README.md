@@ -6,7 +6,9 @@ LaTeX templates I use, each in an English and a Persian version.
 en/  fa/
 ├── notebook-template        book class, for long notes
 ├── slide-template           beamer, for lectures
-└── assignment-template-1    article, for homework handouts
+├── assignment-template-1    article, for homework handouts
+└── student-solution         article, for answering one of those
+                             (notebook typography, monochrome)
 ```
 
 ## Build
@@ -16,7 +18,7 @@ cd en/notebook-template
 latexmk -xelatex -shell-escape main.tex
 ```
 
-- `-shell-escape` is only for the notebook templates, which use minted.
+- `-shell-escape` is for the notebook and solution templates, which use minted.
 - The `fa/` ones need XeLaTeX. There is no LuaLaTeX build for them.
 - Run twice. Some backgrounds are placed with `remember picture`.
 
@@ -39,8 +41,8 @@ The files in `sections/` are demos. Delete them and write your own.
 
 - `\lr{...}` for Latin inside Persian, `\rl{...}` for Persian inside an LTR
   box such as a TikZ node.
-- Numbers like 4.1 flip in RTL. Use `\nbnum` (notebook) or `\hwnum`
-  (assignment), and `\SepMark{-}` so the number doesn't read as a decimal.
+- Numbers like 4.1 flip in RTL. Use `\nbnum` (notebook), `\hwnum`
+  (assignment), or `\solnum` (solution), and `\SepMark{-}` so the number doesn't read as a decimal.
 - Don't add microtype. Its protrusion breaks Persian letter joining.
 
 ## Licence

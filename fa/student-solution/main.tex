@@ -1,0 +1,21 @@
+% latexmk -xelatex -shell-escape main.tex
+%
+% XeLaTeX only (xepersian). -shell-escape is required by minted.
+
+\documentclass[11pt]{article}
+\usepackage{styles/solution}
+
+\begin{document}
+
+\makecover
+
+\parthead{بخش نظری}
+\input{sections/01-theoretical}
+
+\parthead{بخش پژوهشی}
+\input{sections/02-research}
+
+\parthead{بخش عملی}
+\input{sections/03-practical}
+
+\end{document}

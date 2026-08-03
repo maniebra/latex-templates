@@ -1,0 +1,62 @@
+\ProvidesPackage{styles/answers}[2026/08/03 Question and answer blocks, Persian]
+%   \begin{question} ... \end{question}   صورت سوال
+%   \begin{answer} ... \end{answer}       پاسخ، با برچسب «پاسخ»
+%   \begin{answer}[بخش الف] ...           برچسب دلخواه
+%   \result{$x = 4$}                      جوابی که مصحح دنبالش می‌گردد
+%   \begin{aside} ... \end{aside}         توضیح حاشیه‌ای
+%   \points{۱۲}                            کنار عنوان سوال
+
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{etoolbox}
+
+% The question as it was asked: tinted, left bar, italic.
+\newtcolorbox{question}{
+  enhanced, breakable,
+  colback  = papersoft,
+  colframe = inkfaint,
+  boxrule  = 0pt, rightrule = 2.4pt,   % leading edge in RTL
+  arc = 3.2pt, outer arc = 3.2pt,
+  left = 12pt, right = 12pt, top = 9pt, bottom = 9pt, boxsep = 0pt,
+  before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+  parbox = false,
+  fontupper = \fontsize{8.9}{12.6}\selectfont\color{inkmuted}%
+              \setlength{\parskip}{0.5\baselineskip},
+}
+
+% The answer: no box. A tracked label, then body text at full width, with a
+% hairline closing it so consecutive answers stay apart.
+\newenvironment{answer}[1][پاسخ]
+  {\par\vspace{0.5\baselineskip}\nobreak
+   {\uisemi\fontsize{7.4}{7.4}\selectfont\color{\solAccent}%
+    #1\par}\nobreak
+   \vspace{0.2\baselineskip}}
+  {\par\vspace{0.3\baselineskip}%
+   \textcolor{rule}{\rule{\linewidth}{0.4pt}}\par}
+
+% Bar and tint, no label.
+\newtcolorbox{aside}{
+  enhanced, breakable,
+  colback  = paper,
+  colframe = rule,
+  boxrule  = 0pt, rightrule = 2.4pt,   % leading edge in RTL
+  arc = 3.2pt, outer arc = 3.2pt,
+  left = 12pt, right = 12pt, top = 7pt, bottom = 7pt, boxsep = 0pt,
+  before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+  parbox = false,
+  fontupper = \fontsize{8.6}{12.2}\selectfont\color{inkmuted},
+}
+
+% Final result, ruled off so a grader cannot miss it.
+\newcommand{\result}[1]{%
+  \begin{center}
+    \tcbox[enhanced, nobeforeafter, on line,
+           colback = accentsoft, colframe = accentsoft,
+           boxrule = 0pt, arc = 3pt,
+           left = 12pt, right = 12pt, top = 7pt, bottom = 7pt,
+           boxsep = 0pt]{#1}
+  \end{center}}
+
+% Point value, set beside a question title.
+\newcommand{\points}[1]{%
+  \hspace{0.5em}{\uimed\fontsize{8}{8}\selectfont\color{inkfaint}%
+  \solnum{#1} نمره}}

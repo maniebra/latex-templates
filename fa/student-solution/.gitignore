@@ -1,0 +1,46 @@
+# ── LaTeX build artefacts ────────────────────────────────────
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.bcf
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+*.synctex(busy)
+*.run.xml
+*.nav
+*.snm
+*.vrb
+*.idx
+*.ilg
+*.ind
+*.glo
+*.gls
+*.xdv
+
+# ── minted / pygments ────────────────────────────────────────
+_minted*/
+_minted/
+*.pyg
+.minted-cache/
+*.listing
+
+# ── tcolorbox externalisation ────────────────────────────────
+*.aux.bak
+*.tcbverb
+
+# ── Output ───────────────────────────────────────────────────
+# Comment this out if you want the built PDF in the repo.
+main.pdf
+
+# ── Editors & OS ─────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*~
+.DS_Store

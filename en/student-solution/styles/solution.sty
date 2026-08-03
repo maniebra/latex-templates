@@ -1,0 +1,26 @@
+\ProvidesPackage{styles/solution}[2026/08/03 Student solution template]
+% Single entry point; main.tex loads only this.
+% Order matters: vars, then fonts, then the rest.
+
+\RequirePackage{xcolor}
+\input{vars/colors.tex}
+\input{vars/meta.tex}
+
+\RequirePackage{styles/fonts}
+\RequirePackage{styles/page}
+\RequirePackage{styles/headings}
+\RequirePackage{styles/answers}
+\RequirePackage{styles/code}
+\RequirePackage{styles/cover}
+
+\hypersetup{
+  pdftitle  = {\solCourse\ --- \solTitle},
+  pdfauthor = {\solStudent},
+  pdfsubject= {\solCourseCode},
+}
+
+\RequirePackage{amsmath}
+
+\renewcommand{\footnoterule}{\vspace*{6pt}{\color{rule}\hrule width 60pt height 0.4pt}\vspace*{5pt}}
+\RequirePackage[bottom, hang, flushmargin]{footmisc}
+\renewcommand{\footnotesize}{\fontsize{7.4}{10.2}\selectfont}

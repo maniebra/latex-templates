@@ -1,0 +1,112 @@
+\ProvidesPackage{styles/code}[2026/08/02 Syntax-highlighted code blocks]
+% minted (Pygments) in a tcolorbox with a chrome bar. Needs -shell-escape.
+%
+%   \begin{code}{python}{fib.py} ... \end{code}    (empty 2nd arg = no filename)
+%   \inputcode{python}{src/fib.py}
+%   \begin{plaincode} ... \end{plaincode}          (no highlighting)
+%   \begin{terminal} ... \end{terminal}
+%   \cmd{git rebase -i}                            (inline chip)
+
+\RequirePackage{minted}
+\RequirePackage[most]{tcolorbox}
+\RequirePackage{tikz}
+\RequirePackage{etoolbox}
+\tcbuselibrary{minted, breakable, skins}
+
+\setminted{
+  fontsize      = \fontsize{8}{10.8}\selectfont,
+  breaklines    = true,
+  breakanywhere = false,
+  breaksymbolleft = {\textcolor{codegutter}{\tiny$\hookrightarrow$}},
+  autogobble    = true,
+  tabsize       = 2,
+  numbersep     = 9pt,
+  style         = friendly,
+}
+
+% Chrome bar: three dots, language, optional filename.
+\newcommand{\code@dot}[1]{%
+  \tikz[baseline=-0.4ex]\fill[#1] (0,0) circle (2.3pt);}
+
+\newcommand{\code@chrome}[2]{% #1 language  #2 filename
+  \code@dot{red!70}\hspace{4.5pt}%
+  \code@dot{yellow!70}\hspace{4.5pt}%
+  \code@dot{green!70}\hspace{11pt}%
+  {\ttfamily\bfseries\fontsize{6.5}{6.5}\selectfont\color{inkmuted}%
+    \MakeUppercase{#1}}%
+  \ifblank{#2}{}{%
+    \hfill{\ttfamily\fontsize{6.5}{6.5}\selectfont\color{inkfaint}#2}}%
+}
+
+\tcbset{
+  codeframe/.style n args={2}{
+    enhanced, breakable,
+    colback   = codebg,
+    colframe  = codeborder,
+    boxrule   = 0.6pt,
+    arc       = 4pt,
+    left = 10pt, right = 10pt, top = 8pt, bottom = 8pt, boxsep = 0pt,
+    before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+    title       = {\code@chrome{#1}{#2}},
+    colbacktitle= codechrome,
+    coltitle    = ink,
+    toptitle = 6pt, bottomtitle = 6pt,
+    lefttitle = 10pt, righttitle = 10pt,
+    before upper = \setLTR,
+  },
+}
+
+\newtcblisting{code}[2]{%
+  codeframe={#1}{#2},
+  listing engine = minted,
+  minted language = #1,
+  listing only,
+}
+
+\newcommand{\inputcode}[2]{%
+  \begin{tcolorbox}[codeframe={#1}{#2}]
+    \inputminted{#1}{#2}
+  \end{tcolorbox}}
+
+\newtcblisting{plaincode}{%
+  codeframe={text}{},
+  listing only,
+  listing options = {basicstyle=\ttfamily\fontsize{8}{10.8}\selectfont,
+                     breaklines=true, columns=fullflexible},
+}
+
+\newtcbox{\cmd}{
+  on line, nobeforeafter,
+  colback = papersoft, colframe = rule,
+  boxrule = 0.5pt, arc = 2.5pt,
+  left = 3pt, right = 3pt, top = 1pt, bottom = 1pt, boxsep = 0pt,
+  fontupper = {\ttfamily\fontsize{8}{8}\selectfont\color{ink}},
+}
+
+% A shell command inside a Persian sentence must not be reordered.
+\let\sol@cmd\cmd
+\renewcommand{\cmd}[1]{\sol@cmd{\lr{#1}}}
+
+% Shell transcripts, on a dark surface.
+\definecolor{termbg}{HTML}{1E1E24}
+\definecolor{termfg}{HTML}{E6E6EC}
+
+\newtcblisting{terminal}[1][]{%
+  enhanced, breakable,
+  colback = termbg, colframe = termbg,
+  % Required: Pygments emits no colour wrapper for plain Token.Text, so the
+  % typed command would inherit ink (#1B1B1F) on #1E1E24, a 1.02:1 ratio.
+  coltext = termfg,
+  boxrule = 0pt, arc = 4pt,
+  left = 11pt, right = 11pt, top = 9pt, bottom = 9pt, boxsep = 0pt,
+  before skip = 0.9\baselineskip, after skip = 0.9\baselineskip,
+  before upper = \setLTR,
+  listing engine = minted,
+  minted language = console,
+  % native, not monokai: monokai paints Generic.Output cyan (#66d9ef),
+  % which makes every output line louder than the command.
+  minted options = {fontsize=\fontsize{8}{10.8}\selectfont,
+                    breaklines=true, autogobble=true, style=native},
+  listing only,
+  #1,
+}

@@ -1,0 +1,97 @@
+\ProvidesPackage{styles/cover}[2026/08/03 Title page, Persian]
+% \makecover — mirrored: everything hangs off the right edge, which is the
+% leading edge in RTL. Drawn with `remember picture, overlay` rather than
+% eso-pic; bidi shifts the shipout layer's origin.
+%
+% A4 (210x297). The right edge lines up with the text block at 184mm.
+
+\RequirePackage{tikz}
+
+\newcommand{\cover@left}{26}
+\newcommand{\cover@right}{184}
+
+\newcommand{\makecover}{%
+  \begin{titlepage}
+  \thispagestyle{bare}
+  \noindent
+  {\begin{tikzpicture}[remember picture, overlay]
+   \begin{scope}[shift={(current page.south west)},
+                 x=1mm, y=1mm, inner sep=0pt, outer sep=0pt]
+
+      \fill[papersoft] (0,0) rectangle (210,297);
+
+      \begin{scope}
+        \clip (0,0) rectangle (210,297);
+        \foreach \x in {5,10,...,208}
+          \foreach \y in {5,10,...,295}
+            {\fill[rule] (\x,\y) circle (0.34);}
+      \end{scope}
+
+      % Kicker
+      \node[anchor = north east, text = inkmuted,
+            font = \uisemi\fontsize{8}{8}\selectfont]
+        at (\cover@right,262)
+        {\rl{\solCourseCode\ \textbullet\ \solSemester}};
+
+      \fill[\solAccent] (\cover@right-26,256) rectangle (\cover@right,257.8);
+
+      % Course, then the assignment being answered
+      \node[anchor = north east, text = ink, text width = 150mm,
+            align = flush right,
+            font = \displaylight\fontsize{38}{50}\selectfont]
+        at (\cover@right,246) {\rl{\solCourse}};
+
+      \node[anchor = north east, text = inkmuted, text width = 150mm,
+            align = flush right,
+            font = \displaymed\fontsize{15}{22}\selectfont]
+        at (\cover@right,196) {\rl{\solTitle}};
+
+      \node[anchor = north east, text = paper,
+            font = \uisemi\fontsize{8}{8}\selectfont,
+            fill = \solAccent, rounded corners = 2pt,
+            inner xsep = 7pt, inner ysep = 4.5pt]
+        at (\cover@right,184) {\rl{پاسخ‌نامه}};
+
+      % Student card
+      \fill[paper, rounded corners = 3mm]
+        (\cover@left,58) rectangle (\cover@right,140);
+      \draw[rule, rounded corners = 3mm, line width = 0.4]
+        (\cover@left,58) rectangle (\cover@right,140);
+
+      \fill[\solAccent] (\cover@right-26,126) rectangle (\cover@right-8,127.6);
+
+      \node[anchor = base east, text = ink,
+            font = \displaymed\fontsize{16}{16}\selectfont]
+        at (\cover@right-8,112) {\rl{\solStudent}};
+
+      \node[anchor = base east, text = inkmuted,
+            font = \uimed\fontsize{9}{9}\selectfont]
+        at (\cover@right-8,102)
+        {\rl{\solStudentID \enspace\textbullet\enspace \texttt{\solEmail}}};
+
+      \fill[rule] (\cover@left+8,92) rectangle (\cover@right-8,92.4);
+
+      \node[anchor = base east, text = inkfaint,
+            font = \uimed\fontsize{7.4}{7.4}\selectfont]
+        at (\cover@right-8,82) {\rl{استاد درس}};
+      \node[anchor = base west, text = ink,
+            font = \uisemi\fontsize{9}{9}\selectfont]
+        at (\cover@left+8,82) {\rl{\solLecturer}};
+
+      \node[anchor = base east, text = inkfaint,
+            font = \uimed\fontsize{7.4}{7.4}\selectfont]
+        at (\cover@right-8,72) {\rl{مهلت تحویل}};
+      \node[anchor = base west, text = ink,
+            font = \uisemi\fontsize{9}{9}\selectfont]
+        at (\cover@left+8,72) {\rl{\solDue}};
+
+      % Imprint
+      \node[anchor = base east, text = inkmuted, align = flush right,
+            font = \uimed\fontsize{8}{13}\selectfont, text width = 150mm]
+        at (\cover@right,36) {\rl{\solUniversity\\ \solDepartment}};
+
+   \end{scope}
+  \end{tikzpicture}}
+  \null
+  \end{titlepage}
+}

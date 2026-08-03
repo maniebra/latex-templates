@@ -1,0 +1,63 @@
+\ProvidesPackage{styles/fonts}[2026/08/03 Typography, Persian]
+% XM Yekan (Persian), Inter (Latin), SF Mono (code).
+% XeLaTeX only: xepersian has no LuaTeX equivalent.
+%
+% XM Yekan ships a single weight, so the display and UI faces below differ
+% by synthesised weight (AutoFakeBold) rather than by real instances. Drop
+% a multi-weight Persian face into fonts/ and point these at it if you want
+% a true weight ladder.
+
+\RequirePackage{fontspec}
+\RequirePackage[math-style=TeX]{unicode-math}
+
+% Before \defaultfontfeatures, while kpathsea still resolves the name.
+\setmathfont{latinmodern-math.otf}
+
+\defaultfontfeatures{Path=fonts/, Ligatures=TeX}
+
+% Latin text inside a Persian paragraph.
+\setmainfont{Inter-400.ttf}[
+  ItalicFont     = Inter-Italic-400.ttf,
+  BoldFont       = Inter-650.ttf,
+  BoldItalicFont = Inter-Italic-650.ttf,
+]
+\setsansfont{Inter-400.ttf}[BoldFont = Inter-650.ttf]
+
+\setmonofont{SF-Mono-Regular.otf}[
+  BoldFont       = SF-Mono-Semibold.otf,
+  ItalicFont     = SF-Mono-RegularItalic.otf,
+  BoldItalicFont = SF-Mono-BoldItalic.otf,
+  Scale          = 0.90,
+]
+
+% Display faces, used by the headings and the cover. Names match the Latin
+% template so the two sets of style files stay interchangeable.
+\newfontfamily\displayfont {XM-Yekan.ttf}[AutoFakeBold = 2.5]
+\newfontfamily\displaylight{XM-Yekan.ttf}
+\newfontfamily\displaybook {XM-Yekan.ttf}
+\newfontfamily\displaymed  {XM-Yekan.ttf}[AutoFakeBold = 1.4, FakeBold = 1.4]
+\newfontfamily\displaysemi {XM-Yekan.ttf}[AutoFakeBold = 2.0, FakeBold = 2.0]
+\newfontfamily\displaybold {XM-Yekan.ttf}[AutoFakeBold = 2.8, FakeBold = 2.8]
+\newfontfamily\displayblack{XM-Yekan.ttf}[AutoFakeBold = 3.6, FakeBold = 3.6]
+
+% UI chrome: pills, headers, captions.
+\newfontfamily\uimed {XM-Yekan.ttf}
+\newfontfamily\uisemi{XM-Yekan.ttf}[AutoFakeBold = 2.0, FakeBold = 2.0]
+\newfontfamily\uibold{XM-Yekan.ttf}[AutoFakeBold = 2.8, FakeBold = 2.8]
+
+\newfontfamily\tabularfigures{XM-Yekan.ttf}
+
+% Numerals. A number like 3.1 must not be reordered by the bidi algorithm
+% (the dot is neutral, so the two halves swap), but \lr alone also drops
+% xepersian's digit mapping and leaves Latin figures. \solnum does both:
+% an LTR box, set in a font that maps ASCII digits to Persian ones.
+\newfontfamily\sol@digitfont{XM-Yekan.ttf}[Mapping = farsidigits]
+\newcommand{\solnum}[1]{\lr{{\sol@digitfont #1}}}
+
+% Letter-spacing breaks Arabic-script joining, so \tracked passes its
+% argument through untouched. It stays a command because the style files and
+% your own text both call it; in the Latin template it letter-spaces.
+\newcommand{\tracked}[2][60]{#2}
+
+% No microtype: XeTeX's protrusion breaks the joining of Arabic-script
+% glyphs, which is what turns a Persian word into loose letters.

@@ -1,0 +1,22 @@
+% latexmk -xelatex  -shell-escape main.tex
+% latexmk -lualatex -shell-escape main.tex
+%
+% -shell-escape is required by minted.
+
+\documentclass[11pt]{article}
+\usepackage{styles/solution}
+
+\begin{document}
+
+\makecover
+
+\parthead{Theoretical}
+\input{sections/01-theoretical}
+
+\parthead{Research}
+\input{sections/02-research}
+
+\parthead{Practical}
+\input{sections/03-practical}
+
+\end{document}

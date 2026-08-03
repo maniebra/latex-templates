@@ -1,0 +1,87 @@
+\ProvidesPackage{styles/headings}[2026/08/03 Article headings, Persian]
+% One question per \section. Levels are told apart by their mark (solid
+% badge, tinted chip, square) as much as by size.
+
+\RequirePackage{titlesec}
+\RequirePackage{titletoc}
+\RequirePackage[most]{tcolorbox}
+
+% Accent bar running out to the margin as a hairline.
+\newcommand{\sol@splitrule}[1][18pt]{%
+  \noindent
+  \textcolor{\solAccent}{\rule[0pt]{#1}{2.5pt}}%
+  \textcolor{rule}{\rule[1pt]{\dimexpr\linewidth-#1\relax}{0.5pt}}}
+
+\newtcbox{\sol@secbadge}{
+  on line, nobeforeafter,
+  colback = \solAccent, colframe = \solAccent,
+  boxrule = 0pt, arc = 3pt,
+  left = 5pt, right = 5pt, top = 3pt, bottom = 3pt, boxsep = 0pt,
+  fontupper = {\uibold\fontsize{8.8}{8.8}\selectfont\color{paper}},
+}
+
+\newtcbox{\sol@subchip}{
+  on line, nobeforeafter,
+  colback = accentsoft, colframe = accentsoft,
+  boxrule = 0pt, arc = 3pt,
+  left = 4.5pt, right = 4.5pt, top = 2pt, bottom = 2pt, boxsep = 0pt,
+  fontupper = {\uisemi\fontsize{8.4}{8.4}\selectfont\color{\solAccent}},
+}
+
+\newcommand{\sol@sectionrule}{%
+  \mbox{}\par\nobreak
+  \vspace{-0.6\baselineskip}%
+  \sol@splitrule\par\nobreak
+  \vspace{0.6\baselineskip}}
+
+% Section: split rule above, number hung into the margin.
+\titleformat{\section}[hang]
+  {\sol@sectionrule\displaysemi\fontsize{15}{18.5}\selectfont\color{ink}}
+  {\raisebox{0.3ex}{\sol@secbadge{\solnum{\thesection}}}\hspace{3mm}}
+  {0pt}{}
+\titlespacing*{\section}{0pt}{1.1\baselineskip}{0.6\baselineskip}
+
+\titleformat{name=\section,numberless}[hang]
+  {\sol@sectionrule\displaysemi\fontsize{15}{18.5}\selectfont\color{ink}}
+  {}{0pt}{}
+\titlespacing*{name=\section,numberless}{0pt}{1.1\baselineskip}{0.6\baselineskip}
+
+\titleformat{\subsection}
+  {\displaymed\fontsize{12}{15}\selectfont\color{ink}}
+  {\raisebox{0.2ex}{\sol@subchip{\solnum{\thesubsection}}}\hspace{0.6em}}{0pt}{}
+\titlespacing*{\subsection}{0pt}{1.4\baselineskip}{0.4\baselineskip}
+
+% Subsubsection, set as a tracked uppercase label.
+\newcommand{\sol@ssslabel}[1]{#1}
+
+\titleformat{\subsubsection}
+  {\uisemi\fontsize{8}{12.1}\selectfont\color{inkmuted}}
+  {}{0pt}
+  {\textcolor{\solAccent}{\rule[0.05ex]{4.5pt}{4.5pt}}\hspace{1.2em}%
+   \sol@ssslabel}
+\titlespacing*{\subsubsection}{0pt}{1.2\baselineskip}{0.35\baselineskip}
+
+% Run-in paragraph heading
+\titleformat{\paragraph}[runin]
+  {\uisemi\color{ink}}{}{0pt}{}[\;\textcolor{inkfaint}{\textbar}\;]
+\titlespacing*{\paragraph}{0pt}{0.8\baselineskip}{0.6em}
+
+% Part banner between the parts of an assignment.
+\newcommand{\parthead}[1]{%
+  \par\vspace{0.4\baselineskip}
+  {\uisemi\fontsize{8}{8}\selectfont\color{\solAccent}%
+   #1\par}
+  \vspace{0.5\baselineskip}
+  \textcolor{rule}{\rule{\linewidth}{0.5pt}}
+  \par\vspace{0.2\baselineskip}}
+
+% Table of contents, one line per question.
+\renewcommand{\contentsname}{فهرست}
+
+\titlecontents{section}[0pt]
+  {\addvspace{4pt}\normalfont\fontsize{9.3}{12.1}\selectfont\color{ink}}
+  {\textcolor{\solAccent}{\solnum{\thecontentslabel}}\hspace{0.8em}}
+  {}
+  {\titlerule*[6pt]{\color{rule}.}\;\uimed\footnotesize\color{inkfaint}\thecontentspage}
+
+\setcounter{tocdepth}{1}

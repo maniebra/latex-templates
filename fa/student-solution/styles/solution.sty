@@ -1,0 +1,52 @@
+\ProvidesPackage{styles/solution}[2026/08/03 Student solution template, Persian]
+% Single entry point; main.tex loads only this.
+% Order matters: vars, then fonts, then the rest, and xepersian dead last —
+% bidi patches what is already loaded, so anything after it stays LTR.
+
+\RequirePackage{xcolor}
+\input{vars/colors.tex}
+\input{vars/meta.tex}
+
+\RequirePackage{styles/fonts}
+\RequirePackage{styles/page}
+\RequirePackage{styles/headings}
+\RequirePackage{styles/answers}
+\RequirePackage{styles/code}
+\RequirePackage{styles/cover}
+
+
+\RequirePackage{amsmath}
+
+\renewcommand{\footnoterule}{\vspace*{6pt}{\color{rule}\hrule width 60pt height 0.4pt}\vspace*{5pt}}
+\RequirePackage[bottom, hang, flushmargin]{footmisc}
+\renewcommand{\footnotesize}{\fontsize{7.4}{10.2}\selectfont}
+
+% ---------------------------------------------------------------- Persian
+\RequirePackage{xepersian}
+
+\settextfont{XM-Yekan.ttf}[
+  Path         = fonts/,
+  AutoFakeBold = 2.5,
+  Scale        = 1.0,
+]
+\setlatintextfont{Inter-400.ttf}[
+  Path           = fonts/,
+  ItalicFont     = Inter-Italic-400.ttf,
+  BoldFont       = Inter-650.ttf,
+  BoldItalicFont = Inter-Italic-650.ttf,
+]
+\setdigitfont{XM-Yekan.ttf}[Path = fonts/]
+
+% The digit mapping turns '.' into the Persian decimal separator, which makes
+% 2.1 read as a number rather than as question 2, part 1. Use a dash instead.
+\SepMark{-}
+
+% Latin runs inside a Persian paragraph: \lr{Big-O}
+% Persian runs inside an LTR box: \rl{...}
+
+% After xepersian, so \lr in the metadata is defined.
+\hypersetup{
+  pdftitle  = {\solCourse\ --- \solTitle},
+  pdfauthor = {\solStudent},
+  pdfsubject= {\solCourseCode},
+}

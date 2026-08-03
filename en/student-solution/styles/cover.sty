@@ -1,0 +1,91 @@
+\ProvidesPackage{styles/cover}[2026/08/03 Title page]
+% \makecover — drawn in the shipout background layer in paper mm on A4
+% (210x297). Left edge lines up with the text block at 26mm.
+
+\RequirePackage{tikz}
+\RequirePackage{eso-pic}
+
+\newcommand{\cover@left}{26}
+\newcommand{\cover@right}{184}
+
+\newcommand{\makecover}{%
+  \begin{titlepage}
+  \thispagestyle{bare}
+  \AddToShipoutPictureBG*{\AtPageLowerLeft{%
+    \begin{tikzpicture}[x=1mm, y=1mm, inner sep=0pt, outer sep=0pt]
+
+      \fill[papersoft] (0,0) rectangle (210,297);
+
+      \begin{scope}
+        \clip (0,0) rectangle (210,297);
+        \foreach \x in {5,10,...,208}
+          \foreach \y in {5,10,...,295}
+            {\fill[rule] (\x,\y) circle (0.34);}
+      \end{scope}
+
+      % Kicker
+      \node[anchor = north west, text = inkmuted,
+            font = \uisemi\fontsize{8}{8}\selectfont]
+        at (\cover@left,262)
+        {\tracked[150]{\MakeUppercase{\solCourseCode\ \textbullet\ \solSemester}}};
+
+      \fill[\solAccent] (\cover@left,256) rectangle (\cover@left+26,257.8);
+
+      % Course, then the assignment being answered
+      \node[anchor = north west, text = ink, text width = 150mm,
+            align = flush left,
+            font = \displaylight\fontsize{38}{43}\selectfont]
+        at (\cover@left,246) {\solCourse};
+
+      \node[anchor = north west, text = inkmuted, text width = 150mm,
+            align = flush left,
+            font = \displaymed\fontsize{15}{20}\selectfont]
+        at (\cover@left,196) {\solTitle};
+
+      \node[anchor = north west, text = paper,
+            font = \uisemi\fontsize{8}{8}\selectfont,
+            fill = \solAccent, rounded corners = 2pt,
+            inner xsep = 7pt, inner ysep = 4.5pt]
+        at (\cover@left,184) {\tracked[120]{SOLUTIONS}};
+
+      % Student card
+      \fill[paper, rounded corners = 3mm]
+        (\cover@left,58) rectangle (\cover@right,140);
+      \draw[rule, rounded corners = 3mm, line width = 0.4]
+        (\cover@left,58) rectangle (\cover@right,140);
+
+      \fill[\solAccent] (\cover@left+8,126) rectangle (\cover@left+26,127.6);
+
+      \node[anchor = base west, text = ink,
+            font = \displaymed\fontsize{16}{16}\selectfont]
+        at (\cover@left+8,112) {\solStudent};
+
+      \node[anchor = base west, text = inkmuted,
+            font = \uimed\fontsize{9}{9}\selectfont]
+        at (\cover@left+8,102) {\solStudentID \enspace\textbullet\enspace \texttt{\solEmail}};
+
+      \fill[rule] (\cover@left+8,92) rectangle (\cover@right-8,92.4);
+
+      \node[anchor = base west, text = inkfaint,
+            font = \uimed\fontsize{6.6}{6.6}\selectfont]
+        at (\cover@left+8,82) {\tracked[100]{LECTURER}};
+      \node[anchor = base east, text = ink,
+            font = \uisemi\fontsize{9}{9}\selectfont]
+        at (\cover@right-8,82) {\solLecturer};
+
+      \node[anchor = base west, text = inkfaint,
+            font = \uimed\fontsize{6.6}{6.6}\selectfont]
+        at (\cover@left+8,72) {\tracked[100]{DUE}};
+      \node[anchor = base east, text = ink,
+            font = \uisemi\fontsize{9}{9}\selectfont]
+        at (\cover@right-8,72) {\solDue};
+
+      % Imprint
+      \node[anchor = base west, text = inkmuted,
+            font = \uimed\fontsize{8}{11}\selectfont, text width = 150mm]
+        at (\cover@left,36) {\solUniversity\\ \solDepartment};
+
+    \end{tikzpicture}}}
+  \null
+  \end{titlepage}
+}
