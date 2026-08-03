@@ -1,0 +1,38 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{boxes}[2026/08/03 Heavy-bar tcolorbox]
+
+\RequirePackage{tcolorbox}
+\RequirePackage{styles/grid}
+\tcbuselibrary{skins, breakable}
+
+% A block quote in poster clothing: a heavy bar over the top, the title
+% reversed out of it, no side or bottom frame at all.
+\newtcolorbox{blockbox}[2][]{%
+    enhanced, breakable,
+    colback=paper, colframe=paper, boxrule=0pt, sharp corners,
+    left=0mm, right=0mm, top=9mm, bottom=4mm,
+    overlay unbroken and first={%
+        \fill[ink] (frame.north west) rectangle ([yshift=-6.5mm]frame.north east);
+        \node[anchor=west, xshift=3mm, yshift=-3.25mm, text=paper,
+              font=\headfont\scriptsize] at (frame.north west)
+            {\addfontfeature{LetterSpace=22}\MakeUppercase{#2}};
+    },
+    overlay middle and last={%
+        \fill[ink] (frame.north west) rectangle ([yshift=-1.4pt]frame.north east);
+    },
+    #1
+}
+
+% Tinted aside: filled cell, heavy left bar, label set inline.
+\newtcolorbox{asidebox}[2][]{%
+    enhanced, breakable,
+    colback=tint, colframe=tint, boxrule=0pt, sharp corners,
+    left=5mm, right=5mm, top=4mm, bottom=4mm,
+    borderline west={3.6pt}{0pt}{ink},
+    coltitle=ink, colbacktitle=tint,
+    fonttitle=\headfont\scriptsize,
+    title={\addfontfeature{LetterSpace=22}\MakeUppercase{#2}},
+    #1
+}
+
+\endinput

@@ -1,0 +1,93 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sections}[2026/08/03 Poster headings on a strict grid]
+
+\RequirePackage[explicit]{titlesec}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+\RequirePackage{styles/grid}
+
+% A question heading: heavy bar, then an oversized numeral hanging into the
+% margin with the title flush against it. Nothing centred, ever.
+\DeclareRobustCommand{\headrow}[2]{%
+    \par\noindent\setlength{\parskip}{0pt}%
+    \heavybar
+    \vspace{2.5mm}
+    \par\noindent
+    \llap{{\postfont\fontsize{40}{40}\selectfont #1}\hspace{6mm}}%
+    \begin{minipage}[b]{\linewidth}
+        \raggedright{\headfont\fontsize{17}{21}\selectfont #2}
+    \end{minipage}\par
+    \vspace{2mm}\midbar
+    \vspace{0.4ex}
+}
+
+\titleformat{\section}{}{}{0pt}{\headrow{\thesection}{#1}}
+\titleformat{name=\section,numberless}{}{}{0pt}{\headrow{\rule{9mm}{9mm}}{#1}}
+
+% Sub-parts: numeral in the margin, single mid rule, no slab.
+\titleformat{\subsection}
+{\headfont\normalsize\color{ink}}
+{\llap{{\postfont\large\thesubsection}\hspace{6mm}}}
+{0pt}
+{\subhead{#1}}
+
+% Sub-part title and its hairline, with the document parskip suppressed.
+\DeclareRobustCommand{\subhead}[1]{%
+    \begingroup\setlength{\parskip}{0pt}%
+    #1\par\vspace{0.8ex}\hairbar\endgroup}
+
+\titlespacing{\section}{0pt}{6ex plus 1ex minus .2ex}{3ex plus .2ex}
+\titlespacing{\subsection}{0pt}{4ex plus 1ex minus .2ex}{1.6ex plus .2ex}
+
+% ── Part opener ────────────────────────────────────────────────────────
+% Full-bleed black page. The part numeral is set enormous and runs off the
+% right edge; the title sits flush left on the baseline grid.
+\newcounter{parthead}
+\newcommand{\thepartnum}{\hwpostnum{\two@digits{\value{parthead}}}}
+\newcommand{\parthead}[2][]{%
+    \clearpage
+    \thispagestyle{empty}
+    \stepcounter{parthead}
+    \begin{tikzpicture}[remember picture, overlay]
+        \fill[ink] (current page.north west) rectangle (current page.south east);
+
+        \node[anchor=east, text=paper, inner sep=0pt,
+              font=\postfont\fontsize{150}{150}\selectfont]
+            at ([xshift=-2.2cm, yshift=3.2cm]current page.east) {\thepartnum};
+
+        % Top bar and the part label reversed out of it.
+        \fill[paper] ([yshift=-2.6cm]current page.north west)
+            rectangle ([yshift=-2.9cm]current page.north east);
+        \node[anchor=east, text=paper, xshift=-2.2cm, yshift=-1.9cm]
+            at (current page.north east) {\lsc{بخش \thepartnum{} / \coursename}};
+
+        % Title block, flush left, hard against the bottom bar.
+        \node[anchor=south east, text=paper, xshift=-2.2cm, yshift=6.2cm,
+              align=right, text width=15cm]
+            at (current page.south east)
+            {\rl{\postfont\fontsize{54}{58}\selectfont #2}};
+        \node[anchor=north east, text=paper, xshift=-2.2cm, yshift=5.4cm,
+              align=right, text width=11cm]
+            at (current page.south east) {\rl{\small #1}};
+        \fill[paper] ([xshift=-2.2cm, yshift=4.2cm]current page.south east)
+            rectangle ([xshift=-8.2cm, yshift=4.45cm]current page.south east);
+    \end{tikzpicture}
+    \clearpage
+}
+
+% ── Furniture used inside questions ────────────────────────────────────
+% \marginpar, not marginnote: bidi mirrors it correctly in RTL.
+\newcommand{\marginlabel}[1]{%
+    \marginpar{\raggedleft\color{mid}\footnotesize
+        {\color{ink}\rule{1.6cm}{1.4pt}}\par\vspace{1.5mm}#1}}
+
+% Point value: a filled block, flush right on the heading line.
+\DeclareRobustCommand{\points}[1]{\hfill\block{#1 نمره}}
+
+% hyperref writes titles into PDF bookmarks, where a colour box cannot go.
+\AtBeginDocument{%
+    \ifdefined\pdfstringdefDisableCommands
+        \pdfstringdefDisableCommands{\def\points#1{ (#1)}}
+    \fi}
+
+\endinput

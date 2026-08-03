@@ -1,0 +1,31 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fonts}[2026/08/03 Grid-poster fonts]
+
+\RequirePackage{fontspec}
+
+\setmainfont{Inter-400.ttf}[
+    Path=./fonts/,
+    BoldFont=Inter-600.ttf,
+    ItalicFont=Inter-Italic-400.ttf,
+    BoldItalicFont=Inter-Italic-400.ttf,
+]
+
+\setmonofont{SF-Mono-Regular.otf}[
+    Path=./fonts/,
+    BoldFont=SF-Mono-Bold.otf,
+    Scale=0.88,
+]
+
+% Poster weights. \postfont is the loud one, used for anything set large.
+\newfontfamily\postfont{Lexend-800.ttf}[Path=./fonts/, BoldFont=Lexend-800.ttf]
+\newfontfamily\headfont{Lexend-600.ttf}[Path=./fonts/]
+\newfontfamily\thinfont{Lexend-300.ttf}[Path=./fonts/]
+
+% Letterspaced caps, the label voice of the whole template. LetterSpace is a
+% fontspec feature; no microtype, it breaks the fa/ twin.
+\DeclareRobustCommand{\lsc}[1]{%
+    {\headfont\footnotesize\addfontfeature{LetterSpace=22}\MakeUppercase{#1}}}
+\DeclareRobustCommand{\lscsm}[1]{%
+    {\headfont\scriptsize\addfontfeature{LetterSpace=22}\MakeUppercase{#1}}}
+
+\endinput

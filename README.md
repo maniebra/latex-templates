@@ -8,6 +8,7 @@ en/  fa/
 ├── slide-template           beamer, for lectures
 ├── assignment-template-1    article, for homework handouts
 ├── assignment-template-2    article, exam sheet, browser-window cover
+├── assignment-template-3    article, Swiss grid poster, monochrome
 └── student-solution         article, for answering one of those
                              (notebook typography, monochrome)
 ```
@@ -43,7 +44,11 @@ The files in `sections/` are demos. Delete them and write your own.
 - `\lr{...}` for Latin inside Persian, `\rl{...}` for Persian inside an LTR
   box such as a TikZ node.
 - Numbers like 4.1 flip in RTL. Use `\nbnum` (notebook), `\hwnum`
-  (assignment), or `\solnum` (solution), and `\SepMark{-}` so the number doesn't read as a decimal.
+  (assignments), or `\solnum` (solution), and `\SepMark{-}` so the number
+  doesn't read as a decimal.
+- Assignment 3 sets its poster-sized numerals with `\hwpostnum`, and letter
+  spacing is left out of its labels on purpose: tracking breaks Persian
+  joining.
 - Don't add microtype. Its protrusion breaks Persian letter joining.
 
 ## Licence

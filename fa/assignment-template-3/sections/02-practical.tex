@@ -1,0 +1,23 @@
+\section{چیزی بسازید \points{۴۰}}
+
+اینجا بنویسید دانشجو چه چیزی باید بسازد، بعد محدودیت‌ها، و بعد آنچه گزارش
+باید داشته باشد.
+
+\begin{codeblock}{run.sh}
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python main.py --input data/sample.csv
+\end{codeblock}
+
+\subsection{تحویل‌دادنی‌ها}
+
+\begin{checklist}
+    \item کد، قابل اجرا از روی یک نسخه‌ی تازه‌ی مخزن.
+    \item گزارشی کوتاه: روش، نتایج، و اینکه چه چیزی را دفعه‌ی بعد جور دیگری می‌کردید.
+    \item نام هر وابستگی، با یک خط توضیح که چرا آنجاست.
+\end{checklist}
+
+\begin{blockbox}{نحوه‌ی نمره‌دهی}
+    بیشترین وزن با درستی است. خوانایی و کیفیت گزارش بقیه‌ی وزن را می‌گیرند؛
+    برنامه‌ای که کار می‌کند اما کسی سر در نمی‌آورد، تمام‌شده نیست.
+\end{blockbox}

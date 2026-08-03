@@ -1,0 +1,31 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{code}[2026/08/03 Reversed code block]
+
+\RequirePackage{tcolorbox}
+\RequirePackage{styles/grid}
+\tcbuselibrary{skins, listings, breakable}
+
+% Printed in reverse: black stock, filename in a white bar across the top,
+% a solid square at the right end of that bar as the only mark.
+\newtcblisting{codeblock}[2][]{
+    enhanced, breakable,
+    colback=ink, colframe=ink, boxrule=0pt, sharp corners,
+    left=5mm, right=5mm, top=10mm, bottom=5mm,
+    listing only,
+    listing options={
+        basicstyle=\ttfamily\small\color{paper},
+        breaklines=true, tabsize=2,
+        showstringspaces=false,
+        escapechar=@,
+    },
+    overlay unbroken and first={%
+        \fill[paper] (frame.north west) rectangle ([yshift=-7mm]frame.north east);
+        \node[anchor=west, xshift=4mm, yshift=-3.5mm, text=ink,
+              font=\ttfamily\footnotesize\bfseries] at (frame.north west) {#2};
+        \fill[ink] ([xshift=-4mm, yshift=-2mm]frame.north east)
+            rectangle ++(-3mm, -3mm);
+    },
+    #1
+}
+
+\endinput

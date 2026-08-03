@@ -1,0 +1,90 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cover}[2026/08/03 Poster title page]
+
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\RequirePackage{adjustbox}
+\RequirePackage{styles/grid}
+\usetikzlibrary{calc}
+
+% One cell of the metadata grid: label over value, both flush left.
+% #1/#2 are the offsets from the top-left page corner.
+\newcommand{\covercell}[4]{%
+    \node[anchor=north west, text=mid, font=\scriptsize]
+        at ([xshift=#1, yshift=#2]current page.north west) {\lscsm{#3}};
+    \node[anchor=north west, text=ink, font=\headfont\normalsize]
+        at ([xshift=#1, yshift=#2-6mm]current page.north west) {#4};
+}
+
+\newcommand{\makecover}{%
+\begin{titlepage}
+\thispagestyle{empty}
+\begin{tikzpicture}[remember picture, overlay]
+
+    % ── Masthead bar, full bleed ───────────────────────────────────────
+    \fill[ink] (current page.north west) rectangle
+               ([yshift=-2.2cm]current page.north east);
+    \node[anchor=west, text=paper, xshift=15mm, yshift=-1.1cm]
+        at (current page.north west) {\lsc{\university}};
+    \node[anchor=east, text=paper, xshift=-15mm, yshift=-1.1cm]
+        at (current page.north east) {\lscsm{\department}};
+
+    % ── Assignment numeral and logo, sharing one baseline ──────────────
+    \node[anchor=base east, text=ink, inner sep=0pt,
+          font=\postfont\fontsize{150}{150}\selectfont]
+        at ([xshift=-15mm, yshift=-23cm]current page.north east)
+        {\two@digits{\hwnumber}};
+    \node[anchor=base west, inner sep=0pt]
+        at ([xshift=15mm, yshift=-23cm]current page.north west)
+        {\includegraphics[height=38mm]{\hwlogo}};
+
+    % ── Title block, flush left on the grid ────────────────────────────
+    \node[anchor=north west, xshift=15mm, yshift=-3.6cm]
+        at (current page.north west) {\lscsm{\coursecode\ / Assignment \hwnumber}};
+
+    \node[anchor=north west, xshift=15mm, yshift=-4.6cm, text width=13cm,
+          align=left, font=\postfont\fontsize{52}{54}\selectfont]
+        at (current page.north west) {\MakeUppercase{\hwtitle}};
+
+    \node[anchor=north west, xshift=15mm, yshift=-9.6cm, text width=13cm,
+          align=left, font=\thinfont\fontsize{22}{26}\selectfont]
+        at (current page.north west) {\coursename};
+
+    \fill[ink] ([xshift=15mm, yshift=-11.4cm]current page.north west)
+        rectangle ([xshift=-15mm, yshift=-11.76cm]current page.north east);
+
+    % ── Metadata grid ──────────────────────────────────────────────────
+    \covercell{15mm}{-12.4cm}{Semester}{\semester}
+    \covercell{65mm}{-12.4cm}{Due}{\duedate}
+    \covercell{125mm}{-12.4cm}{Weight}{\hwgrade{} points}
+
+    \fill[mid] ([xshift=15mm, yshift=-14.6cm]current page.north west)
+        rectangle ([xshift=-15mm, yshift=-14.65cm]current page.north east);
+
+    \covercell{15mm}{-15.2cm}{Lecturer}{\lecturers}
+    \covercell{125mm}{-15.2cm}{Written by}{\hwauthor}
+
+    \fill[ink] ([xshift=15mm, yshift=-17.4cm]current page.north west)
+        rectangle ([xshift=-15mm, yshift=-17.76cm]current page.north east);
+
+    % ── Foot: full-bleed black block ───────────────────────────────────
+    \fill[ink] (current page.south west) rectangle
+               ([yshift=4cm]current page.south east);
+    \node[anchor=west, text=paper, xshift=15mm, yshift=2.6cm,
+          font=\postfont\fontsize{26}{30}\selectfont]
+        at (current page.south west) {\MakeUppercase{Read the rules first.}};
+    \node[anchor=west, text=paper, xshift=15mm, yshift=1.3cm, text width=12cm,
+          font=\small, align=left]
+        at (current page.south west)
+        {Submission format, late policy, and the integrity rules are on the
+         next page. Anything not stated there is decided by the lecturer.};
+    \node[anchor=east, text=paper, xshift=-15mm, yshift=1.9cm,
+          font=\postfont\fontsize{40}{40}\selectfont]
+        at (current page.south east) {\hwgrade};
+
+\end{tikzpicture}
+\end{titlepage}
+\setcounter{page}{1}
+}
+
+\endinput

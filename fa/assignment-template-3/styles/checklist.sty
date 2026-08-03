@@ -1,0 +1,43 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{checklist}[2026/08/03 Square checklist, grid numerals]
+
+\RequirePackage{enumitem}
+\RequirePackage{tikz}
+\RequirePackage{styles/grid}
+
+% Empty: an outlined square. Ticked: the same square, filled solid.
+\DeclareRobustCommand{\squareempty}{%
+    \begin{tikzpicture}[baseline=-0.35ex]
+        \draw[ink, line width=1.4pt] (0,-0.25ex) rectangle (1.2ex, 0.95ex);
+    \end{tikzpicture}%
+}
+
+\DeclareRobustCommand{\squarefull}{%
+    \begin{tikzpicture}[baseline=-0.35ex]
+        \fill[ink] (0,-0.25ex) rectangle (1.2ex, 0.95ex);
+    \end{tikzpicture}%
+}
+
+\newlist{checklist}{itemize}{1}
+\setlist[checklist]{
+    label=\squareempty,
+    leftmargin=*,
+    itemsep=1ex, parsep=0pt, topsep=1.5ex,
+}
+
+\newcommand{\citem}{\item[\squarefull]}
+
+% House numerals: reversed out of a solid square, on the grid.
+\DeclareRobustCommand{\gridnum}[1]{%
+    \begin{tikzpicture}[baseline=-0.8ex]
+        \fill[ink] (0,-1.15ex) rectangle (2.8ex, 1.45ex);
+        \node[text=paper, font=\headfont\footnotesize] at (1.4ex, 0.15ex) {#1};
+    \end{tikzpicture}%
+}
+
+\setlist[enumerate,1]{label=\gridnum{\arabic*}, leftmargin=*,
+                      itemsep=1.1ex, labelsep=3mm}
+\setlist[enumerate,2]{label=\headfont\alph*), leftmargin=*, itemsep=0.6ex}
+\setlist[itemize,1]{label=\rule{1.4ex}{1.4ex}, leftmargin=*, itemsep=0.9ex}
+
+\endinput

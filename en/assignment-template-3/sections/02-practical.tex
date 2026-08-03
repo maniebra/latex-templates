@@ -1,0 +1,23 @@
+\section{Build Something \points{40}}
+
+Describe the artefact you want the students to build, then the constraints,
+then what the report has to contain.
+
+\begin{codeblock}{run.sh}
+python -m venv .venv && . .venv/bin/activate
+pip install -r requirements.txt
+python main.py --input data/sample.csv
+\end{codeblock}
+
+\subsection{Deliverables}
+
+\begin{checklist}
+    \item Source, runnable from a clean checkout.
+    \item A short report: approach, results, and what you would do differently.
+    \item Every dependency named, with one line on why it is there.
+\end{checklist}
+
+\begin{blockbox}{Grading}
+    Correctness carries most of the weight. Readability and the quality of the
+    report carry the rest; a working program nobody can follow is not finished.
+\end{blockbox}

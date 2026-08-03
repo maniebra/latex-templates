@@ -1,0 +1,33 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{fonts}[2026/08/03 Grid-poster fonts, Persian]
+
+% Loaded after xepersian; \settextfont and friends come from there.
+\settextfont[Path=./fonts/]{XM-Yekan.ttf}
+\setlatintextfont[Path=./fonts/, BoldFont=Inter-600.ttf]{Inter-400.ttf}
+\setmonofont{SF-Mono-Regular.otf}[Path=./fonts/, BoldFont=SF-Mono-Bold.otf,
+                                  Scale=0.88]
+
+% Poster weights come from Sahel, which XM Yekan has no equivalent of. The
+% -FD cut already renders digits in Persian, so the big numerals need no
+% mapping and no \lr wrapper.
+\defpersianfont\postfont[Path=./fonts/]{Sahel-Black-FD.ttf}
+\defpersianfont\headfont[Path=./fonts/]{Sahel-SemiBold-FD.ttf}
+\defpersianfont\thinfont[Path=./fonts/]{Sahel-FD.ttf}
+\newfontfamily\postlatin[Path=./fonts/]{Lexend-800.ttf}
+
+% Persian digits inside running text, where the body face is XM Yekan.
+\newfontfamily\hw@digitfont[Path=./fonts/, Mapping=farsidigits]{XM-Yekan.ttf}
+\newcommand{\hwnum}[1]{\lr{{\hw@digitfont #1}}}
+% Poster-sized numerals: Sahel Black, already Persian-digited.
+\newfontfamily\hw@postdigit[Path=./fonts/]{Sahel-Black-FD.ttf}
+\newcommand{\hwpostnum}[1]{\lr{{\hw@postdigit #1}}}
+
+\SepMark{-}
+
+% Label voice. No LetterSpace: tracking breaks Persian letter joining, so
+% labels get weight and size instead. \rl keeps them upright inside TikZ
+% nodes, which are LTR boxes.
+\DeclareRobustCommand{\lsc}[1]{{\headfont\footnotesize\rl{#1}}}
+\DeclareRobustCommand{\lscsm}[1]{{\headfont\scriptsize\rl{#1}}}
+
+\endinput

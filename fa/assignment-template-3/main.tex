@@ -1,0 +1,45 @@
+% latexmk -xelatex main.tex
+
+\documentclass[11pt,a4paper]{article}
+
+% یک‌رو، و حاشیه‌ی پهن همیشه سمت راست است: شماره‌ی سؤال‌ها و یادداشت‌های
+% کناری همان‌جا می‌نشینند.
+\usepackage[a4paper, top=2.2cm, bottom=2.2cm, right=3.8cm, left=2cm,
+            marginparwidth=1.8cm, marginparsep=1.9cm, headsep=8mm]{geometry}
+\reversemarginpar   % یادداشت‌های کناری در حاشیه‌ی پهنِ راست
+\usepackage{tikz}
+\usepackage[hidelinks]{hyperref}
+\usetikzlibrary{calc}
+
+\input{vars/colors.tex}
+\input{vars/meta.tex}
+
+\usepackage{styles/grid}
+\usepackage{styles/boxes}
+\usepackage{styles/code}
+\usepackage{styles/checklist}
+\usepackage{styles/sections}
+\usepackage{styles/pages}
+\usepackage{styles/cover}
+
+% آخر از همه: bidi فقط چیزی را وصله می‌زند که پیش از آن بارگذاری شده باشد.
+\usepackage{xepersian}
+\usepackage{styles/fonts}
+
+\linespread{1.12}
+\setlength{\parskip}{0.7em}
+\setlength{\parindent}{0pt}
+
+\begin{document}
+
+\makecover
+
+\input{sections/00-guidelines.tex}
+
+\parthead[تعریف، اثبات و استدلال کوتاه.]{نظری}
+\input{sections/01-questions.tex}
+
+\parthead[کد، اندازه‌گیری و گزارش مکتوب.]{عملی}
+\input{sections/02-practical.tex}
+
+\end{document}
