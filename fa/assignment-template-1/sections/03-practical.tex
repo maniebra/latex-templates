@@ -1,0 +1,45 @@
+\section{تمرین عملی}
+
+آنچه را باید بسازند توضیح دهید و مستندات مرجع را پیوند بزنید:
+
+\url{https://example.com/docs}
+
+دامنه‌ی کار را روشن بگویید: چه چیزی لازم است، چه چیزی خارج از محدوده است، و
+کدام داده‌ها می‌توانند فقط در حافظه بمانند.
+
+\subsection{مراحل}
+
+\begin{enumerate}
+    \item مستندات مرجع را بخوانید.
+    \item پیش از نوشتن کد، رویکردتان را توضیح دهید.
+    \item پیاده‌سازی کنید.
+    \item معماری نهایی را تحلیل کنید.
+\end{enumerate}
+
+\subsection{یک پنجره‌ی کد}
+
+\begin{neocode}[neocodetitlefont=\pixelfont]{config.yaml}
+listen-on: 80
+
+paths:
+  "/":
+    type: redirect
+    target: "http://localhost:8080/index.html"
+  "/dir/":
+    type: servedir
+    target: "/home/user/movies/"
+\end{neocode}
+
+\lr{\texttt{neocode}} متن نوار عنوان را به عنوان آرگومان اجباری می‌گیرد و هر
+کلید \lr{\texttt{listings}} را در آرگومان اختیاری، مثلاً
+\lr{\texttt{[listing options=\{language=Python\}]}}. داخل بلوک،
+\lr{\texttt{@\ldots@}} به لاتک بازمی‌گردد، پس ماکروهایی مانند
+\lr{\texttt{\textbackslash hwnumber}} همچنان باز می‌شوند.
+
+\subsection{فهرست تیک‌دار}
+
+\begin{neochecklist}
+    \citem موردی که انجام شده، با \lr{\texttt{\textbackslash citem}}
+    \item موردی که انجام نشده، با \lr{\texttt{\textbackslash item}}
+    \item موردی دیگر که پیش از تحویل باید انجام شود
+\end{neochecklist}

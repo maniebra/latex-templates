@@ -1,0 +1,76 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{cover}[2026/08/03 جلد تمرین]
+
+\RequirePackage{tikz}
+\RequirePackage{graphicx}
+\usetikzlibrary{shapes.geometric, calc}
+
+\newcommand{\makecover}{%
+\begin{titlepage}
+    \begin{tikzpicture}[remember picture, overlay]
+
+        % شبکه‌ی شش‌ضلعی پس‌زمینه
+        \begin{scope}
+                \clip (current page.south west) rectangle (current page.north east);
+
+            \foreach \x in {0,...,35} {
+                    \foreach \y in {0,...,40} {
+                            \pgfmathsetmacro{\yoffset}{0.866*\y + mod(\x,2)*0.433}
+                            \node[regular polygon, regular polygon sides=6, minimum size=1cm, draw=hairline, thin, outer sep=0pt]
+                            at ([xshift=0.75*\x cm, yshift=\yoffset cm]current page.south west) {};
+                        }
+                }
+        \end{scope}
+
+        % نوار بالای صفحه
+        \fill[ink] ([yshift=-2cm]current page.north west) rectangle (current page.north east);
+
+        % عنوان
+        \node[anchor=north west, xshift=1.5cm, yshift=-3cm] at (current page.north west) {
+            \begin{minipage}{0.8\textwidth}
+                \begin{RTL}
+                    {\pixelfont\fontsize{54}{54}\selectfont\baselineskip=70pt\relax
+                    \coursename\par} \vspace{0.8cm}
+                    {\fontsize{24}{30}\selectfont \textbf{\hwtitle}}
+                \end{RTL}
+            \end{minipage}
+        };
+
+        % نشانه‌ی تزیینی
+        \node[anchor=north east, xshift=-1.5cm, yshift=-3.5cm] at (current page.north east) {
+            {\pixelfont\fontsize{120}{120}\selectfont >}
+        };
+
+        % خط عمودی
+        \fill[ink] ([xshift=1.5cm, yshift=2cm]current page.south west) rectangle ([xshift=1.7cm, yshift=12cm]current page.south west);
+
+        % استادان و نیم‌سال
+        \node[anchor=south west, xshift=2.2cm, yshift=2cm] at (current page.south west) {
+            \begin{minipage}{10cm}
+                \begin{flushleft}
+                    \begin{RTL}
+                        {\Large استادان درس: \\\lecturers} \\[0.8cm]
+                        {\small \semester}
+                    \end{RTL}
+                \end{flushleft}
+            \end{minipage}
+        };
+
+        % لوگو و دانشکده
+        \node[anchor=south east, xshift=-1.5cm, yshift=2cm] at (current page.south east) {
+            \begin{minipage}{4cm}
+                \begin{flushright}
+                    {\includegraphics[width=4cm]{\hwlogo}}
+                    {\rl{\pixelfont\fontsize{10}{10}\selectfont \department}}
+                \end{flushright}
+            \end{minipage}
+        };
+
+        % نوار پایین صفحه
+        \fill[ink] (current page.south west) rectangle ([yshift=1cm]current page.south east);
+
+    \end{tikzpicture}
+\end{titlepage}
+}
+
+\endinput

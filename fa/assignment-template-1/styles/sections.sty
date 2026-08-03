@@ -1,0 +1,43 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{sections}[2026/08/03 عنوان‌های بخش]
+
+\RequirePackage[explicit]{titlesec}
+\RequirePackage{xcolor}
+
+\newcommand{\neosecrule}{%
+    \makebox[\linewidth][c]{%
+        \rlap{\raisebox{-3.5pt}{\hspace{3.5pt}\rule{\linewidth}{1.8pt}}}% Shadow
+        \rule{\linewidth}{1.8pt}% Main Line
+    }%
+}
+
+\titleformat{\section}
+{\Large}
+{\fboxsep=4pt\colorbox{ink}{\color{paper}{\hwnum{\thesection}}}}
+{0.6em}
+{#1\\[0.8ex]\neosecrule}
+
+\titleformat{name=\section,numberless}
+{\Large}
+{}
+{0pt}
+{#1\\[0.8ex]\neosecrule}
+
+\titleformat{\subsection}
+{\normalfont\large\bfseries}
+{\setlength{\fboxrule}{1.8pt}\setlength{\fboxsep}{4pt}\fbox{\hwnum{\thesubsection}}}
+{0.6em}
+{#1\\[0.5ex]\rule{\linewidth}{1.8pt}}
+
+% بنر بخش‌های اصلی: < نظری >
+\newcommand{\parthead}[1]{%
+    \begin{center}
+        {\pixelfont\fontsize{44}{60}\selectfont < #1 >}
+    \end{center}
+    \vspace{0.5cm}
+}
+
+\titlespacing{\section}{0pt}{4ex plus 1ex minus .2ex}{3ex plus .2ex}
+\titlespacing{\subsection}{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\endinput

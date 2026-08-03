@@ -1,0 +1,53 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{code}[2026/08/03 پنجره‌ی کد]
+
+\RequirePackage{tcolorbox}
+\tcbuselibrary{skins, listings, breakable}
+
+\tcbset{
+    neocodetitlefont/.store in=\neocode@titlefont,
+    neocodetitlefont=\small\ttfamily\bfseries,
+    neocodefont/.store in=\neocode@mainfont,
+    neocodefont=\small\ttfamily
+}
+
+\tcbset{
+    neowinstyle/.style={
+        enhanced,
+        breakable,
+        colback=paper,
+        colframe=ink,
+        boxrule=1.5pt,
+        sharp corners,
+        toptitle=4mm, 
+        titlerule=0pt,
+        overlay unbroken and first={
+            \fill[ink] (frame.north west) rectangle ([yshift=-15pt]frame.north east);
+            
+            \node[anchor=west, xshift=4pt, yshift=-7.5pt] at (frame.north west) 
+                {\color{paper}\neocode@titlefont #1};
+            
+            \draw[paper, ultra thick] ([xshift=-12pt, yshift=-11pt]frame.north east) -- ([xshift=-6pt, yshift=-5pt]frame.north east);
+            \draw[paper, ultra thick] ([xshift=-12pt, yshift=-5pt]frame.north east) -- ([xshift=-6pt, yshift=-11pt]frame.north east);
+            
+            \draw[paper, ultra thick] ([xshift=-24pt, yshift=-11pt]frame.north east) rectangle ([xshift=-18pt, yshift=-5pt]frame.north east);
+            
+            \draw[paper, ultra thick] ([xshift=-36pt, yshift=-9pt]frame.north east) -- ([xshift=-30pt, yshift=-9pt]frame.north east);
+        },
+        shadow={4pt}{-4pt}{0pt}{ink}, 
+        before upper={\ifdefined\setLTR\setLTR\fi},
+    }
+}
+
+\newtcblisting{neocode}[2][]{
+    neowinstyle={#2},
+    listing only,
+    listing options={
+        basicstyle=\ttfamily\small,
+        breaklines=true,
+        tabsize=2,
+        showstringspaces=false,
+        escapechar=@
+    },
+    #1
+}
