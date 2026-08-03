@@ -1,13 +1,13 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{sections}[2026/08/03 عنوان‌های بخش]
+\ProvidesPackage{sections}[2026/08/03 Section headings]
 
 \RequirePackage[explicit]{titlesec}
 \RequirePackage{xcolor}
 
 \newcommand{\neosecrule}{%
     \makebox[\linewidth][c]{%
-        \rlap{\raisebox{-3.5pt}{\hspace{3.5pt}\rule{\linewidth}{1.8pt}}}% Shadow
-        \rule{\linewidth}{1.8pt}% Main Line
+        \rlap{\raisebox{-3.5pt}{\hspace{3.5pt}\rule{\linewidth}{1.8pt}}}
+        \rule{\linewidth}{1.8pt}
     }%
 }
 
@@ -29,7 +29,6 @@
 {0.6em}
 {#1\\[0.5ex]\rule{\linewidth}{1.8pt}}
 
-% بنر بخش‌های اصلی: < نظری >
 \newcommand{\parthead}[1]{%
     \begin{center}
         {\pixelfont\fontsize{44}{60}\selectfont < #1 >}

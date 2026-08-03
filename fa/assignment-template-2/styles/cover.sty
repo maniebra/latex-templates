@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{cover}[2026/08/03 جلد آزمون، به شکل پنجره‌ی مرورگر]
+\ProvidesPackage{cover}[2026/08/03 Browser-window exam cover]
 
 \RequirePackage{tikz}
 \RequirePackage{graphicx}
@@ -10,11 +10,9 @@
 \newcommand{\makecover}{%
 \begin{tikzpicture}[remember picture, overlay]
 
-    % قاب پنجره: زمینه‌ی تیره و کاغذ سفید داخل آن
     \fill[ink] (current page.north west) rectangle (current page.south east);
     \fill[paper] ($(current page.north west) - (-0.2,1.5)$) rectangle ($(current page.south east) + (-0.4,0.5)$);
 
-    % نوار عنوان پنجره: نام درس و دکمه‌ها
     \begin{scope}
         \node[text=paper] at ($(current page.north west) + (3,-0.75)$) {\rl{\pixelfont\fontsize{20}{20}\selectfont \coursename}};
         \node[text=paper] at ($(current page.north east) + (-1,-0.75)$) {\fontsize{20}{20}\selectfont X};
@@ -22,7 +20,6 @@
         \node[text=paper] at ($(current page.north east) + (-3,-0.75)$) {\pixelfont\fontsize{20}{20}\selectfont \_};
     \end{scope}
 
-    % نوار جستجو
     \begin{scope}
         \fill[ink] ($(current page.north west) + (0.2,-3.5)$) rectangle ($(current page.north east) + (-0.4, -3.6)$);
         \fill[paper,line width=2,draw=ink] ($(current page.north west) + (0.6,-1.8)$) rectangle ($(current page.north east) + (-0.8, -3.2)$);
@@ -31,13 +28,11 @@
         \node[text=ink] at ($(current page.north east) + (-2.2,-2.45)$) {\rl{\pixelfont\fontsize{16}{20}\selectfont جستجو\ldots}};
     \end{scope}
 
-    % بنر نام درس
     \begin{scope}
         \fill[ink] ($(current page.north west) + (0.2,-3.5)$) rectangle ($(current page.north east) + (-0.4, -6.2)$);
         \node[text=paper] at ($(current page.north east) + (-10.5,-5)$) {\adjustbox{max width=17cm}{\rl{\pixelfont\fontsize{48}{56}\selectfont \coursename}}};
     \end{scope}
 
-    % دانشگاه، دانشکده، نیم‌سال و لوگو
     \begin{scope}
         \node at ($(current page.north east) + (-2.5,-8.4)$) {\includegraphics[width=3.8cm]{\hwlogo}};
         \node[text=ink] at ($(current page.north east) + (-12.5,-7.5)$) {\adjustbox{max width=11cm}{\rl{\pixelfont\fontsize{20}{20}\selectfont \university{} / \department}}};
@@ -45,13 +40,11 @@
         \node[text=ink] at ($(current page.north west) + (1.6,-9)$) {\fontsize{20}{20}\selectfont\faIcon[regular]{university} \faIcon[regular]{calendar}};
     \end{scope}
 
-    % بنر عنوان آزمون
     \begin{scope}
         \fill[ink] ($(current page.north west) + (0.2,-10.6)$) rectangle ($(current page.north east) + (-0.4, -16)$);
         \node[text=paper] at ($(current page.north east) + (-10.67,-13.25)$) {\adjustbox{max width=18cm}{\rl{\pixelfont\fontsize{56}{56}\selectfont \hwtitle}}};
     \end{scope}
 
-    % استادان
     \node[text=ink] at ($(current page.north east) + (-10.67,-21)$) {\rl{\pixelfont\fontsize{24}{20}\selectfont \lecturers}};
 
 \end{tikzpicture}

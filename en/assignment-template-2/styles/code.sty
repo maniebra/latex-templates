@@ -1,5 +1,5 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{code}[2026/08/03 Neobrutalist code window]
+\ProvidesPackage{code}[2026/08/03 Code window]
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins, listings, breakable}
@@ -19,30 +19,21 @@
         colframe=ink,
         boxrule=1.5pt,
         sharp corners,
-        % This creates the physical space for our manual header
         top=8mm, 
         titlerule=0pt,
-        % Manual drawing for total control over "un-centered" alignment
         overlay unbroken and first={
-            % 1. Solid Black Title Bar
             \fill[ink] (frame.north west) rectangle ([yshift=-20pt]frame.north east);
             
-            % 2. THE TITLE: Strictly anchored to the west (left) with 4pt offset
             \node[anchor=west, xshift=4pt, yshift=-10pt] at (frame.north west) 
                 {\color{paper}\neocode@titlefont #1};
             
-            % 3. SYMBOLS: White, Bold, No Buttons
-            % Close (X)
             \draw[paper, ultra thick] ([xshift=-12pt, yshift=-13.5pt]frame.north east) -- ([xshift=-6pt, yshift=-6.5pt]frame.north east);
             \draw[paper, ultra thick] ([xshift=-12pt, yshift=-6.5pt]frame.north east) -- ([xshift=-6pt, yshift=-13.5pt]frame.north east);
             
-            % Maximize (Square)
             \draw[paper, ultra thick] ([xshift=-24pt, yshift=-13.5pt]frame.north east) rectangle ([xshift=-18pt, yshift=-6.5pt]frame.north east);
             
-            % Minimize (Line)
             \draw[paper, ultra thick] ([xshift=-36pt, yshift=-10pt]frame.north east) -- ([xshift=-30pt, yshift=-10pt]frame.north east);
         },
-        % Flat shadow
         shadow={4pt}{-4pt}{0pt}{ink}, 
     }
 }

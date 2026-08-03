@@ -1,32 +1,25 @@
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{boxes}[2026/08/03 Neobrutalist tcolorbox style]
+\ProvidesPackage{boxes}[2026/08/03 Neobrutalist tcolorbox]
 
 \RequirePackage{tcolorbox}
 \tcbuselibrary{skins, breakable}
 
-% 1. Define a custom key for the title font
 \tcbset{
     neotitlefont/.store in=\neobox@titlefont,
-    neotitlefont=\bfseries % Default: Bold
+    neotitlefont=\bfseries
 }
 
-% 2. Define the neobrutal style
 \tcbset{
     neobrutal/.style={
         enhanced,
-        % Colors (Strict Black and White)
         colback=paper,
         colframe=ink,
         coltitle=paper,
         colbacktitle=ink,
-        % Border thickness
         boxrule=1.8pt,
         sharp corners,
-        % Hard Shadow
         shadow={3.5pt}{-3.5pt}{0pt}{ink},
-        % Customizable Font Title
         fonttitle=\neobox@titlefont,
-        % Floating title box
         attach boxed title to top left={xshift=4mm, yshift=-3mm},
         boxed title style={
             sharp corners,
@@ -34,15 +27,13 @@
             colframe=ink,
             outer arc=0pt,
         },
-        % Spacing
         top=3mm,
         bottom=3mm,
     }
 }
 
-% 3. The neobox command
 \newtcolorbox{neobox}[2][]{
     neobrutal,
     title={#2},
-    #1 % This allows passing 'neotitlefont' locally
+    #1
 }

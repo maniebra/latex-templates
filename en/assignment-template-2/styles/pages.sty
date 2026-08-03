@@ -20,26 +20,19 @@
     
     \fancyfoot[CE, CO]{
         \begin{tikzpicture}[remember picture, overlay]
-            % The Full-Width Black Bar
             \fill[ink] (current page.south west) rectangle ([yshift=25pt]current page.south east);
             
             \ifodd\value{page}
-                % --- ODD PAGE: semester left, page number right ---
-                % LEFT: semester
                 \node[anchor=west, xshift=1.5cm, yshift=12.5pt] at (current page.south west) {
                     \small\color{paper}{\bfseries \ifdefined\semester \semester \fi}
                 };
-                % RIGHT: page number
                 \node[anchor=east, xshift=-1.5cm, yshift=12.5pt] at (current page.south east) {
                     \small\color{paper}{\pixelfont \thepage}
                 };
             \else
-                % --- EVEN PAGE: page number left, assignment title right ---
-                % LEFT: page number
                 \node[anchor=west, xshift=1.5cm, yshift=12.5pt] at (current page.south west) {
                     \small\color{paper}{\pixelfont \thepage}
                 };
-                % RIGHT: assignment title
                 \node[anchor=east, xshift=-1.5cm, yshift=12.5pt] at (current page.south east) {
                     \small\color{paper}{\bfseries \ifdefined\hwtitle \hwtitle \fi}
                 };
